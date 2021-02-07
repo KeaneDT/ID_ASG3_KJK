@@ -1,19 +1,99 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="style.css" rel="stylesheet" type="text/css" />
-    <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDgf798Vi6n6V21cJtSWAdbtobHdDt1n4Q&libraries=places&callback=initMap">
-    </script>
-    <script src="script.js"></script>
-    <title>ID ASSIGNMENT 3</title>
-</head>
+  <head>
+    <title>Covid-19 Map</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <!-- Bootstrap CSS -->
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+    <!-- Style.css -->
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <!-- Navigation Bar-->
+    <nav class="navbar navbar-expand-md sticky-top">
+      <!--To make navbar 100% of top-->
+      <div class="container-fluid">
+        <!--Customizing Navigtation Bar-->
+        <a href="#trackerSection" class="navName">M</a>
+        <button
+          type="button"
+          class="navbar-toggle"
+          data-toggle="collapse"
+          data-target="#myNavbar"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="myNavbar">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item active">
+              <a href="" class="nav-link">Home</a>
+            </li>
+            <li class="nav-item active">
+              <a href="" class="nav-link">About</a>
+            </li>
+            <li class="nav-item active">
+              <a href="" class="nav-link">Map</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <!--Money Background Introduction-->
+    <div class="covidBg" id="homeSection">
+      <div class="col-12 text-center covidTitle">
+        <h1>Covid-19 Map</h1>
+      </div>
+    </div>
+    <!--About Section-->
+    <div class="container padding aboutSection" id="aboutSection">
+      <div class="row text-center">
+        <div class="col-12">
+          <button onclick="darkMode()" class="dmButton">Dark Mode</button>
+          <div class="aboutTitle">
+            <h1 class="display-4">About</h1>
+          </div>
+          <div class="aboutText">
+            <p class="lead">(Enter About Text Here)</p>
+          </div>
+        </div>
+      </div>
+    </div>
 
-<body>
     <h3>Enter your location</h3>
     <input id="input" placeholder="Enter location" type="text" />
-    <input type="submit" id="submit" value="Locate">
+    <input type="submit" id="submit" value="Locate" />
     <div id="map"></div>
-</body>
+
+
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+      integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+      integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+      crossorigin="anonymous"
+    ></script>
+    <!--Chart Js-->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+    <!--Script.js-->
+    <script src="script.js"></script>
+  </body>
+</html>
