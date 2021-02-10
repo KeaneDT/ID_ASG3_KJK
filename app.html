@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Covid-19 Map</title>
+    <title>Document</title>
     <!-- Required meta tags -->
     <meta charset="utf-8" />
     <meta
@@ -48,43 +48,11 @@
         </div>
       </div>
     </nav>
-
-    <!--Money Background Introduction-->
-    <div class="covidBg" id="homeSection">
-      <div class="col-12 text-center covidTitle">
-        <h1>Covid-19 Map</h1>
-      </div>
-    </div>
-
-    <!--About Section-->
-    <div class="container aboutSection" id="aboutSection">
-      <div class="row text-center">
-        <div class="col-12">
-          <div class="aboutTitle">
-            <h1 class="display-4">About</h1>
-          </div>
-          <div class="aboutText">
-            <p class="lead">
-              The purpose of this game is to eudcate users on the severity of the Covid-19 Virus throughout the
-              world. By providing a fun game, users will be able to have fun and still learn more about the 
-              statistics of Covid-19. The implemented point system will also provide users with more benefits such as the ability to view news articles after reaching a certain amount.
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
-    
-    <!--Proceed To Game-->
-    <div class="container proceedGame">
-      <div class="row text-center">
-        <div class="col-12">
-          <div class="lead">
-            Proceed to the Game!
-          </div>
-        </div>
-      </div>
-
-    </div>
+    <!--Map-->
+    <h3>Enter your location</h3>
+    <input id="input" placeholder="Enter location" type="text" />
+    <input type="submit" id="submit" value="Locate" />
+    <div id="map"></div>
 
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script
