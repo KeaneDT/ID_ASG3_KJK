@@ -351,18 +351,6 @@ template {
 }
 
 /* Our CSS */
-/* Dark Mode */
-.dmButton {
-  margin-top: 2%;
-}
-.dark-mode {
-  background-color: #626970;
-  color: white;
-}
-.dark-mode2 {
-  color: white;
-  background: white;
-}
 /* Basic */
 html {
   width: 100%;
@@ -455,6 +443,12 @@ a:hover {
   border: 2px solid black;
   margin-bottom: 5%;
   margin-top: 3%;
+}
+
+/*CSS Styling for Proceed to Game section*/
+.proceedGame{
+  background-color: #404040;
+  color: white;
 }
 
 @media only screen and (min-width: 768px) {
