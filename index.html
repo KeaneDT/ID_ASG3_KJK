@@ -8,10 +8,6 @@
       name="viewport"
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
-    <!--Google maps api-->
-    <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDgf798Vi6n6V21cJtSWAdbtobHdDt1n4Q&libraries=places&callback=initMap">
-    </script>
     <!-- Bootstrap CSS -->
     <link
       rel="stylesheet"
@@ -46,7 +42,7 @@
               <a href="app.html" class="nav-link">Game</a>
             </li>
             <li class="nav-item active">
-              <a href="" class="nav-link">Store</a>
+              <a href="store.html" class="nav-link">Store</a>
             </li>
           </ul>
         </div>
@@ -69,28 +65,36 @@
           </div>
           <div class="aboutText">
             <p class="lead">
-              The purpose of this game is to eudcate users on the severity of the Covid-19 Virus throughout the
-              world. By providing a fun game, users will be able to have fun and still learn more about the 
-              statistics of Covid-19. The implemented point system will also provide users with more benefits such as the ability to view news articles after reaching a certain amount.
+              The purpose of this game is to eudcate users on the severity of
+              the Covid-19 Virus throughout the world. By providing a fun game,
+              users will be able to have fun and still learn more about the
+              statistics of Covid-19. The implemented point system will also
+              provide users with more benefits such as the ability to view news
+              articles after reaching a certain amount.
             </p>
           </div>
         </div>
       </div>
     </div>
-    
+
+    <div class="explainMap">
+      <div class="col-12">
+        <div class="lead">
+          Below is an example of the map this application uses. Simply click on a location!
+        </div>
+      </div>
+    </div>
+
+    <div id="map"></div>
+
     <!--Proceed To Game-->
     <div class="container proceedGame">
       <div class="row text-center">
         <div class="col-12">
-          <div class="lead">
-            Proceed to the Game!
-          </div>
+          <div class="lead">Proceed to the Game!</div>
         </div>
       </div>
-
     </div>
-
-    <div id="map"></div>
 
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script
@@ -107,6 +111,12 @@
       src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
       integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
       crossorigin="anonymous"
+    ></script>
+    <!--Google maps api-->
+    <script
+      async
+      defer
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDgf798Vi6n6V21cJtSWAdbtobHdDt1n4Q&libraries=places&callback=initMap"
     ></script>
     <!--Chart Js-->
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
