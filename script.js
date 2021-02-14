@@ -13,7 +13,7 @@ function initMap() {
   });
 
   let infoWindow = new google.maps.InfoWindow({
-    content: "Click the Map!",
+    content: "Click on the Map!",
     position: center,
   });
   infoWindow.open(map);

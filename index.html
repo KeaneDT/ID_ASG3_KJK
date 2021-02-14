@@ -78,21 +78,29 @@
     </div>
 
     <div class="explainMap">
-      <div class="col-12">
-        <div class="lead">
-          Below is an example of the map this application uses. Simply click on a location!
+      <div class="col-12"></div>
+        <div class="alert">
+          <span
+            class="lead closebtn"
+            onclick="this.parentElement.style.display='none';"
+            >&times;</span
+          >
+          Below is an example of the map this application uses. Simply click on
+          a location!
         </div>
       </div>
     </div>
 
-    <div id="map"></div>
+    <div class="homeMap">
+      <div id="map"></div>
+    </div>
 
     <!--Proceed To Game-->
-    <div class="container proceedGame">
-      <div class="row text-center">
-        <div class="col-12">
-          <div class="lead">Proceed to the Game!</div>
-        </div>
+    <div class="col-12 proceedGame">
+      <div class="text-center">
+        <button class="lead proceedButton" onclick="document.location='app.html'">
+          Proceed to the Game!
+        </button>
       </div>
     </div>
 
