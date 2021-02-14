@@ -6,14 +6,14 @@ let markers = [];
 
 function initMap() {
   //displays a google map
-  let center = new google.maps.LatLng(1.3521, 103.8198);
+  let center = new google.maps.LatLng(50, 0);
   map = new google.maps.Map(document.getElementById("map"), {
     center: center,
-    zoom: 10,
+    zoom: 1.8,
   });
 
   let infoWindow = new google.maps.InfoWindow({
-    content: "Click the map to get Lat/Lng!",
+    content: "Click the Map!",
     position: center,
   });
   infoWindow.open(map);
@@ -25,7 +25,9 @@ function initMap() {
     infoWindow = new google.maps.InfoWindow({
       position: mapsMouseEvent.latLng,
     });
-    var inputLocation = JSON.parse(JSON.stringify(mapsMouseEvent.latLng.toJSON(), null, 2));
+    var inputLocation = JSON.parse(
+      JSON.stringify(mapsMouseEvent.latLng.toJSON(), null, 2)
+    );
     infoWindow.setContent(
       JSON.stringify(mapsMouseEvent.latLng.toJSON(), null, 2)
     );
@@ -61,5 +63,6 @@ function initMap() {
       });
     });
 }
+
 
 

@@ -8,7 +8,7 @@
       name="viewport"
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
-    
+
     <!-- Bootstrap CSS -->
     <link
       rel="stylesheet"
@@ -49,11 +49,29 @@
         </div>
       </div>
     </nav>
+    <div class="container text-center col-12 gameBanner">
+      <div class="lead">The Game</div>
+    </div>
     <!--Map-->
-    <h3>Enter your location</h3>
-    <input id="input" placeholder="Enter location" type="text" />
-    <input type="submit" id="submit" value="Locate" />
-    <div id="map"></div>
+    <div class="text-center mapContainer">
+      <h3>Enter your location</h3>
+      <input id="input" placeholder="Enter location" type="text" />
+      <input type="submit" id="submit" value="Locate" />
+    </div>
+    <div class="appBox">
+      <div id="map"></div>
+      <div class="displayStats">
+        <div class="displayHeader">Country Statistics</div>
+        <div class="displayText">Country:</div>
+        <div class="countryResult"></div>
+        <div class="displayText">Total Cases:</div>
+        <div class="casesResult"></div>
+        <div class="displayText">Recovered:</div>
+        <div class="recoveredResult"></div>
+        <div class="displayText">Deaths:</div>
+        <div class="deathResult"></div>
+      </div>
+    </div>
 
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script
