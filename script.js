@@ -61,6 +61,9 @@ function initMap() {
           if (inputAddress.types.includes("country")) {
             checkValid = 1;
             infoWindow.setContent(inputAddress.long_name);
+            $(".displayHeader").empty();
+            $(".displayHeader").html(inputAddress.long_name);
+            getData($(".displayHeader").html());
           }
         });
         if (checkValid == 0) {
@@ -70,7 +73,6 @@ function initMap() {
       .catch((err) => console.warn(err.message));
 
     infoWindow.open(map);
-    getData($(".displayHeader").html());
   });
 
   //User input has autocomplete
@@ -110,6 +112,9 @@ function getData(country) {
     .then((response) => response.json())
     .then((data) => {
       let latestData = data[data.length - 1];
+      $("#totalConfirmed").empty();
+      $("#totalRecovered").empty();
+      $("#deaths").empty();
       $("#totalConfirmed").html(latestData.Confirmed);
       $("#totalRecovered").html(latestData.Recovered);
       $("#deaths").html(latestData.Deaths);
