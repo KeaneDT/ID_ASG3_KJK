@@ -112,6 +112,7 @@ function getData(country) {
   fetch(url)
     .then((response) => response.json())
     .then((data) => {
+      // Add code (foreach) for China & US to calculate provinces cases and add them to a variable
       let latestData = data[data.length - 1];
       $("#totalActive").empty();
       $("#totalRecovered").empty();
