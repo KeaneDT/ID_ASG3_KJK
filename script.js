@@ -28,9 +28,27 @@ function initMap() {
     var inputLocation = JSON.parse(
       JSON.stringify(mapsMouseEvent.latLng.toJSON(), null, 2)
     );
-    infoWindow.setContent(
-      JSON.stringify(mapsMouseEvent.latLng.toJSON(), null, 2)
-    );
+
+    const KEY = "AIzaSyAcG8TMTSzobajQabIp6fheJT0QBfQNj9w";
+    const LAT = inputLocation.lat;
+    const LNG = inputLocation.lng;
+
+    let url = "https://maps.googleapis.com/maps/api/geocode/json?latlng=" + LAT + "," + LNG + "&key=" + KEY;
+    fetch(url)
+    .then(response => response.json())
+    .then(data =>{
+      console.log(data);
+      let inputAddress = data.results[0].address_components;
+      inputAddress.forEach(inputAddress => {
+        if(inputAddress.types.includes("country")){
+          infoWindow.setContent(
+            inputAddress.long_name
+          );
+        }
+      })
+    })
+    .catch(err => console.warn(err.message));
+
     infoWindow.open(map);
   });
 
@@ -62,7 +80,6 @@ function initMap() {
         }
       });
     });
+
+  
 }
-
-
-
