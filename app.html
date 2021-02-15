@@ -69,15 +69,25 @@
     <div class="appBox">
       <div id="map"></div>
       <div class="displayStats">
-        <div class="displayHeader">Country Statistics</div>
-        <div class="displayText">Country:</div>
-        <div class="countryResult"></div>
-        <div class="displayText">Total Cases:</div>
-        <div class="casesResult"></div>
-        <div class="displayText">Recovered:</div>
-        <div class="recoveredResult"></div>
-        <div class="displayText">Deaths:</div>
-        <div class="deathResult"></div>
+        <div class="displayHeader"></div>
+        <br>
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">Total Cases</th>
+              <th scope="col">Recovered</th>
+              <th scope="col">Deaths</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!--Add Covid-19 Data when country is searched-->
+            <tr id = "covidData">
+              <td id = "totalConfirmed"></td>
+              <td id = "totalRecovered"></td>
+              <td id = "deaths"></td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
 
@@ -106,7 +116,11 @@
     <!--Chart Js-->
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
     <!--Geoplugin-->
-    <script language="JavaScript" src="http://www.geoplugin.net/javascript.gp" type="text/javascript"></script>
+    <script
+      language="JavaScript"
+      src="http://www.geoplugin.net/javascript.gp"
+      type="text/javascript"
+    ></script>
     <!--Script.js-->
     <script src="script.js"></script>
   </body>

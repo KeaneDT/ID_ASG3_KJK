@@ -4,10 +4,7 @@ let geocoder;
 let userAddress;
 let markers = [];
 
-if ($(".countryResult").is(":empty")) {
-  defaultCountry = geoplugin_countryName();
-  $(".countryResult").append(defaultCountry);
-}
+$(document).ready(initMap());
 
 function initMap() {
   //displays a google map
@@ -17,10 +14,18 @@ function initMap() {
     zoom: 1.8,
   });
 
+  if ($(".displayHeader").is(":empty")) {
+    defaultCountry = geoplugin_countryName();
+    $(".displayHeader").empty();
+    $(".displayHeader").append(defaultCountry);
+    getData(geoplugin_countryName());
+  }
+
   let infoWindow = new google.maps.InfoWindow({
     content: "Click on the Map!",
     position: center,
   });
+
   infoWindow.open(map);
   // Configure the click listener.
   map.addListener("click", (mapsMouseEvent) => {
@@ -30,6 +35,7 @@ function initMap() {
     infoWindow = new google.maps.InfoWindow({
       position: mapsMouseEvent.latLng,
     });
+
     var inputLocation = JSON.parse(
       JSON.stringify(mapsMouseEvent.latLng.toJSON(), null, 2)
     );
@@ -64,6 +70,7 @@ function initMap() {
       .catch((err) => console.warn(err.message));
 
     infoWindow.open(map);
+    getData($(".displayHeader").html());
   });
 
   //User input has autocomplete
@@ -96,4 +103,16 @@ function initMap() {
     });
 }
 
+function getData(country) {
+  var url = "https://api.covid19api.com/country/" + country;
+
+  fetch(url)
+    .then((response) => response.json())
+    .then((data) => {
+      let latestData = data[data.length - 1];
+      $("#totalConfirmed").html(latestData.Confirmed);
+      $("#totalRecovered").html(latestData.Recovered);
+      $("#deaths").html(latestData.Deaths);
+    });
+}
 

@@ -494,8 +494,8 @@ a:hover {
 .displayHeader {
   font-size: 35px;
   font-weight: bold;
+  margin-top: 5%;
   margin-left: 5%;
-  margin-bottom: 5%;
 }
 .displayText {
   font-size: 30px;
@@ -521,6 +521,10 @@ a:hover {
   font-weight: 500;
 }
 
+#covidData {
+  margin-left: 1%;
+  font-size: 30px;
+}
 
 /*CSS Stylig for Map*/
 
