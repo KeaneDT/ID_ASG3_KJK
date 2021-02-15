@@ -4,6 +4,11 @@ let geocoder;
 let userAddress;
 let markers = [];
 
+if ($(".countryResult").is(":empty")) {
+  defaultCountry = geoplugin_countryName();
+  $(".countryResult").append(defaultCountry);
+}
+
 function initMap() {
   //displays a google map
   let center = new google.maps.LatLng(50, 0);
@@ -33,21 +38,30 @@ function initMap() {
     const LAT = inputLocation.lat;
     const LNG = inputLocation.lng;
 
-    let url = "https://maps.googleapis.com/maps/api/geocode/json?latlng=" + LAT + "," + LNG + "&key=" + KEY;
+    let url =
+      "https://maps.googleapis.com/maps/api/geocode/json?latlng=" +
+      LAT +
+      "," +
+      LNG +
+      "&key=" +
+      KEY;
+
     fetch(url)
-    .then(response => response.json())
-    .then(data =>{
-      console.log(data);
-      let inputAddress = data.results[0].address_components;
-      inputAddress.forEach(inputAddress => {
-        if(inputAddress.types.includes("country")){
-          infoWindow.setContent(
-            inputAddress.long_name
-          );
+      .then((response) => response.json())
+      .then((data) => {
+        checkValid = 0;
+        let inputAddress = data.results[0].address_components;
+        inputAddress.forEach((inputAddress) => {
+          if (inputAddress.types.includes("country")) {
+            checkValid = 1;
+            infoWindow.setContent(inputAddress.long_name);
+          }
+        });
+        if (checkValid == 0) {
+          infoWindow.setContent("Invalid Location!");
         }
       })
-    })
-    .catch(err => console.warn(err.message));
+      .catch((err) => console.warn(err.message));
 
     infoWindow.open(map);
   });
@@ -80,6 +94,6 @@ function initMap() {
         }
       });
     });
-
-  
 }
+
+

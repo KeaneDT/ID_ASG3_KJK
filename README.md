@@ -12,7 +12,7 @@ https://keanedt.github.io/ID_ASG3_KJK/
 
 # Technology used
 
-So far we have used Bootstrap, Jquery, Google Maps API & Chart.Js to help us make the website.
+So far we have used Bootstrap, Jquery, Google Maps API, Geoplugin & Chart.Js to help us make the website.
 
 We have also added nomalize css: https://necolas.github.io/normalize.css/8.0.1/normalize.css
 
