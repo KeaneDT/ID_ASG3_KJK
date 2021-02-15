@@ -491,7 +491,7 @@ a:hover {
 }
 .displayStats {
   flex: 1;
-  border: 3px solid black;
+  border: 2.5px solid black;
 }
 .displayHeader {
   font-size: 35px;
