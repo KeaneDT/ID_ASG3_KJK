@@ -63,6 +63,7 @@ function initMap() {
             infoWindow.setContent(inputAddress.long_name);
             $(".displayHeader").empty();
             $(".displayHeader").html(inputAddress.long_name);
+            chart1.destroy();
             getData($(".displayHeader").html());
           }
         });
@@ -112,12 +113,35 @@ function getData(country) {
     .then((response) => response.json())
     .then((data) => {
       let latestData = data[data.length - 1];
-      $("#totalConfirmed").empty();
+      $("#totalActive").empty();
       $("#totalRecovered").empty();
       $("#deaths").empty();
-      $("#totalConfirmed").html(latestData.Confirmed);
+      $("#totalActive").html(latestData.Active);
       $("#totalRecovered").html(latestData.Recovered);
       $("#deaths").html(latestData.Deaths);
+
+      chartData = [latestData.Active, latestData.Recovered, latestData.Deaths];
+      chartLabels = ["Active", "Recovered", "Deaths"];
+
+      var ctx = document.getElementById("covidChart").getContext("2d");
+      chart1 = new Chart(ctx, {
+        // Doughnut chart for the categories
+        type: "doughnut",
+        // The data for our dataset
+        data: {
+          labels: chartLabels,
+          datasets: [
+            {
+              label: "Categories",
+              backgroundColor: ["#5DA5DA", "#77dd77", "#ff6961"],
+              data: chartData,
+            },
+          ],
+        },
+        // Configuration options go here
+        options: {
+          responsive: true,
+        },
+      });
     });
 }
-

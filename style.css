@@ -528,12 +528,20 @@ a:hover {
   font-size: 30px;
 }
 
+#totalActive {
+  color: #5DA5DA;
+}
+
 #totalRecovered {
   color: #77dd77;
 }
 
 #deaths {
   color: #ff6961;
+}
+
+#covidChart {
+  margin-top: 10%;
 }
 
 /*CSS Stylig for Map*/
