@@ -14,6 +14,8 @@ function initMap() {
     zoom: 1.8,
   });
 
+  questionSelector();
+
   if ($(".displayHeader").is(":empty")) {
     defaultCountry = geoplugin_countryName();
     $(".displayHeader").empty();
@@ -108,7 +110,6 @@ function initMap() {
 
 function getData(country) {
   var url = "https://api.covid19api.com/country/" + country;
-  questionSelector();
 
   fetch(url)
     .then((response) => response.json())
