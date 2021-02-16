@@ -172,4 +172,117 @@ function questionSelector(){
     //Country with most overall cases
     document.getElementById("question").innerHTML = "Select country with most overall cases(including past deaths and recovered cases)";
   }
+  return quesNo;
 }
+
+function game(){
+  let test = 1;
+  let noOfTries = 5;
+  fetch("https://api.covid19api.com/summary")
+  .then((response) => response.json())
+  .then((data) => {
+    let countriesData = data.Countries;
+    if(test == 1){
+      if(noOfTries > 0){
+        i = 1;
+        answerStatus = true;
+        while(i < countriesData.length){
+          if(selectedCountryData < countriesData[i].TotalRecovered){
+            answerStatus = false;
+            noOfTries --;
+            break;
+          }
+          i ++;
+        }
+        if(answerStatus){
+          //correct ans
+        }
+        else{
+          //wrong ans
+        }
+      }
+    }
+    if(test == 2){
+      if(noOfTries > 0){
+        i = 1;
+        answerStatus = true;
+        while(i < countriesData.length){
+          if(selectedCountryData > countriesData[i].TotalRecovered){
+            answerStatus = false;
+            noOfTries --;
+            break;
+          }
+          i ++;
+        }
+        if(answerStatus){
+          //correct ans
+        }
+        else{
+          //wrong ans
+        }
+      }
+    }
+    if(test == 3){
+      if(noOfTries > 0){
+        i = 1;
+        answerStatus = true;
+        while(i < countriesData.length){
+          if(selectedCountryData < countriesData[i].TotalDeaths){
+            answerStatus = false;
+            noOfTries --;
+            break;
+          }
+          i ++;
+        }
+        if(answerStatus){
+          //correct ans
+        }
+        else{
+          //wrong ans
+        }
+      }
+    }
+    if(test == 4){
+      if(noOfTries > 0){
+        i = 1;
+        answerStatus = true;
+        while(i < countriesData.length){
+          if(selectedCountryData > countriesData[i].TotalDeaths){
+            answerStatus = false;
+            noOfTries --;
+            break;
+          }
+          i ++;
+        }
+        if(answerStatus){
+          //correct ans
+        }
+        else{
+          //wrong ans
+        }
+      }
+    }
+    if(test == 5){
+      if(noOfTries > 0){
+        i = 1;
+        answerStatus = true;
+        //need to add code to add total of all deaths, recovered and active
+        while(i < countriesData.length){
+          if(selectedCountryData < countriesData[i].Totalconfirmed){
+            answerStatus = false;
+            noOfTries --;
+            break;
+          }
+          i ++;
+        }
+        if(answerStatus){
+          //correct ans
+        }
+        else{
+          //wrong ans
+        }
+      }
+    }
+  })
+}
+
