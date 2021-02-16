@@ -108,6 +108,7 @@ function initMap() {
 
 function getData(country) {
   var url = "https://api.covid19api.com/country/" + country;
+  questionSelector();
 
   fetch(url)
     .then((response) => response.json())
@@ -145,4 +146,29 @@ function getData(country) {
         },
       });
     });
+}
+
+function questionSelector(){
+  let quesNo = Math.floor((Math.random() * 5) + 1);
+  console.log(quesNo);
+  if(quesNo == 1){
+    //Country with most recovered cases
+    document.getElementById("question").innerHTML = "Select country with most recovered cases";
+  }
+  else if (quesNo == 2){
+    //Country with least recovered cases
+    document.getElementById("question").innerHTML = "Select country with least recovered cases";
+  }
+  else if (quesNo == 3){
+    //Country with most deaths
+    document.getElementById("question").innerHTML = "Select country with most deaths";
+  }
+  else if (quesNo == 4){
+    //Country with least deaths
+    document.getElementById("question").innerHTML = "Select country with least deaths";
+  }
+  else if (quesNo == 5){
+    //Country with most overall cases
+    document.getElementById("question").innerHTML = "Select country with most overall cases(including past deaths and recovered cases)";
+  }
 }
