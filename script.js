@@ -4,6 +4,9 @@ let geocoder;
 let userAddress;
 let markers = [];
 
+var boughtNews = 0;
+var boughtDM = 0;
+
 $(document).ready(initMap());
 
 function initMap() {
@@ -399,6 +402,8 @@ function game(noOfTries, test, recovered, deaths, active) {
       }
     });
 }
+
+
 
 //Ignore this. It is just to find out the answer for the ques
 function test() {
