@@ -142,6 +142,7 @@ function getData(country, quesNo, noOfTries) {
 
     var fromDate = d.getDate() - 2;
     var toDate = d.getDate() - 1;
+    var currentMonth = d.getMonth() + 1;
 
     axios({
       method: "get",
@@ -151,13 +152,13 @@ function getData(country, quesNo, noOfTries) {
         "?from=" +
         d.getFullYear() +
         "-" +
-        d.getMonth() +
+        currentMonth +
         "-" +
         fromDate +
         "T00:00:00Z&to=" +
         d.getFullYear() +
         "-" +
-        d.getMonth() +
+        currentMonth +
         "-" +
         toDate +
         "T00:00:00Z",
@@ -171,6 +172,12 @@ function getData(country, quesNo, noOfTries) {
         active += data.data[i].Active;
         recovered += data.data[i].Recovered;
         deaths += data.data[i].Deaths;
+      }
+      //For some reason US numbers are twice the actual number
+      if (country=="United States"){
+        active = Math.round(active/2);
+        recovered = Math.round(recovered/2);
+        deaths = Math.round(deaths/2);
       }
       $("#totalActive").html(active);
       $("#totalRecovered").html(recovered);
