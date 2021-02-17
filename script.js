@@ -135,14 +135,73 @@ function getData(country, quesNo, noOfTries) {
     country == "Australia"
   ) {
     // add code here
+    var d = new Date();
+
+    var fromDate = d.getDate() - 2;
+    var toDate = d.getDate() - 1;
+
+    axios({
+      method: "get",
+      url:
+        "https://api.covid19api.com/country/" +
+        country +
+        "?from=" +
+        d.getFullYear() +
+        "-" +
+        d.getMonth() +
+        "-" +
+        fromDate +
+        "T00:00:00Z&to=" +
+        d.getFullYear() +
+        "-" +
+        d.getMonth() +
+        "-" +
+        toDate +
+        "T00:00:00Z",
+    }).then((data) => {
+      console.log(data);
+      var active = 0;
+      var recovered = 0;
+      var deaths = 0;
+      var i;
+      for (i = 0; i < data.data.length; i++) {
+        active += data.data[i].Active;
+        recovered += data.data[i].Recovered;
+        deaths += data.data[i].Deaths;
+      }
+      $("#totalActive").html(active);
+      $("#totalRecovered").html(recovered);
+      $("#deaths").html(deaths);
+      chartData = [active, recovered, deaths];
+      chartLabels = ["Active", "Recovered", "Deaths"];
+
+      var ctx = document.getElementById("covidChart").getContext("2d");
+      chart1 = new Chart(ctx, {
+        // Doughnut chart for the categories
+        type: "doughnut",
+        // The data for our dataset
+        data: {
+          labels: chartLabels,
+          datasets: [
+            {
+              label: "Categories",
+              backgroundColor: ["#5DA5DA", "#77dd77", "#ff6961"],
+              data: chartData,
+            },
+          ],
+        },
+        // Configuration options go here
+        options: {
+          responsive: true,
+        },
+      });
+    });
   } else {
     axios({
       method: "get",
       url: "https://api.covid19api.com/country/" + country,
     }).then((data) => {
-      console.log(data);
       let latestData = data.data[data.data.length - 1];
-      console.log(latestData);
       $("#totalActive").html(latestData.Active);
       $("#totalRecovered").html(latestData.Recovered);
       $("#deaths").html(latestData.Deaths);
@@ -185,6 +244,11 @@ function getData(country, quesNo, noOfTries) {
       //   )
       // );
     });
+  }
+  if ($("#totalActive").is(":empty")) {
+    $("#totalActive").html("Unknown");
+    $("#totalRecovered").html("Unknown");
+    $("#deaths").html("Unknown");
   }
 }
 
