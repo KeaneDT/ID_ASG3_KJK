@@ -14,7 +14,7 @@ function initMap() {
     zoom: 1.8,
   });
 
-  questionSelector();
+  test();
 
   if ($(".displayHeader").is(":empty")) {
     defaultCountry = geoplugin_countryName();
@@ -28,6 +28,9 @@ function initMap() {
     position: center,
   });
 
+  //selects a question
+  let quesNo = questionSelector();
+  console.log(quesNo);
   infoWindow.open(map);
   // Configure the click listener.
   map.addListener("click", (mapsMouseEvent) => {
@@ -66,7 +69,7 @@ function initMap() {
             $(".displayHeader").empty();
             $(".displayHeader").html(inputAddress.long_name);
             chart1.destroy();
-            getData($(".displayHeader").html());
+            getData($(".displayHeader").html(), quesNo);
           }
         });
         if (checkValid == 0) {
@@ -108,7 +111,7 @@ function initMap() {
     });
 }
 
-function getData(country) {
+function getData(country, quesNo) {
   var url = "https://api.covid19api.com/country/" + country;
 
   fetch(url)
@@ -122,6 +125,7 @@ function getData(country) {
       $("#totalActive").html(latestData.Active);
       $("#totalRecovered").html(latestData.Recovered);
       $("#deaths").html(latestData.Deaths);
+      game(quesNo, latestData.Recovered, latestData.Deaths, latestData.Active);
 
       chartData = [latestData.Active, latestData.Recovered, latestData.Deaths];
       chartLabels = ["Active", "Recovered", "Deaths"];
@@ -151,7 +155,6 @@ function getData(country) {
 
 function questionSelector(){
   let quesNo = Math.floor((Math.random() * 5) + 1);
-  console.log(quesNo);
   if(quesNo == 1){
     //Country with most recovered cases
     document.getElementById("question").innerHTML = "Select country with most recovered cases";
@@ -175,8 +178,7 @@ function questionSelector(){
   return quesNo;
 }
 
-function game(){
-  let test = 1;
+function game(test, recovered, deaths, active){
   let noOfTries = 5;
   fetch("https://api.covid19api.com/summary")
   .then((response) => response.json())
@@ -185,104 +187,141 @@ function game(){
     if(test == 1){
       if(noOfTries > 0){
         i = 1;
-        answerStatus = true;
+        let answerStatus = true;
         while(i < countriesData.length){
-          if(selectedCountryData < countriesData[i].TotalRecovered){
+          if(recovered < countriesData[i].TotalRecovered){
             answerStatus = false;
-            noOfTries --;
             break;
           }
           i ++;
         }
+        console.log(answerStatus);
         if(answerStatus){
-          //correct ans
+          alert("orrect");
+          return true;
         }
         else{
-          //wrong ans
+          noOfTries --;
+          alert("Wrong");
         }
+
+        console.log(noOfTries);
       }
     }
     if(test == 2){
       if(noOfTries > 0){
         i = 1;
-        answerStatus = true;
+        let answerStatus = true;
         while(i < countriesData.length){
-          if(selectedCountryData > countriesData[i].TotalRecovered){
+          if(recovered > countriesData[i].TotalRecovered){
             answerStatus = false;
             noOfTries --;
             break;
           }
           i ++;
         }
+        console.log(answerStatus);
         if(answerStatus){
-          //correct ans
+          alert("Correct");
+          return true;
         }
         else{
-          //wrong ans
+          noOfTries --;
+          alert("Wrong");
         }
       }
     }
     if(test == 3){
       if(noOfTries > 0){
         i = 1;
-        answerStatus = true;
+        let answerStatus = true;
         while(i < countriesData.length){
-          if(selectedCountryData < countriesData[i].TotalDeaths){
+          if(deaths < countriesData[i].TotalDeaths){
             answerStatus = false;
             noOfTries --;
             break;
           }
           i ++;
         }
+        console.log(answerStatus);
         if(answerStatus){
-          //correct ans
+          alert("Correct");
+          return true;
         }
         else{
-          //wrong ans
+          noOfTries --;
+          alert("Wrong");
         }
       }
     }
     if(test == 4){
       if(noOfTries > 0){
         i = 1;
-        answerStatus = true;
+        let answerStatus = true;
         while(i < countriesData.length){
-          if(selectedCountryData > countriesData[i].TotalDeaths){
+          if(deaths > countriesData[i].TotalDeaths){
             answerStatus = false;
             noOfTries --;
             break;
           }
           i ++;
         }
+        console.log(answerStatus);
         if(answerStatus){
-          //correct ans
+          alert("Correct");
+          return true;
         }
         else{
-          //wrong ans
+          noOfTries --;
+          alert("Wrong");
         }
       }
     }
     if(test == 5){
       if(noOfTries > 0){
         i = 1;
-        answerStatus = true;
-        //need to add code to add total of all deaths, recovered and active
+        let answerStatus = true;
+        let total = active + deaths + recovered;
         while(i < countriesData.length){
-          if(selectedCountryData < countriesData[i].Totalconfirmed){
+          if(total < countriesData[i].Totalconfirmed){
             answerStatus = false;
             noOfTries --;
             break;
           }
           i ++;
         }
+        console.log(answerStatus);
         if(answerStatus){
-          //correct ans
+          alert("Correct");
+          return true;
         }
         else{
-          //wrong ans
+          noOfTries --;
+          alert("Wrong");
         }
       }
     }
+  })
+}
+
+//Ignore this. It is just to find out the answer for the ques
+function test(){
+  fetch("https://api.covid19api.com/summary")
+  .then((response) => response.json())
+  .then((data) => {
+    let countriesData = data.Countries;
+    let i = 1;
+    let max = 0;
+    let maxCountry = "";
+    while(i < countriesData.length){
+      if(countriesData[i].TotalConfirmed > max){
+        max = countriesData[i].TotalRecovered;
+        maxCountry = countriesData[i].Country;
+      }
+      i++;
+    }
+    console.log(max);
+    console.log(maxCountry);
   })
 }
 
