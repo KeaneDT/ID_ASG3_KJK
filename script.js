@@ -32,6 +32,8 @@ function initMap() {
   let quesNo = questionSelector();
   console.log(quesNo);
   infoWindow.open(map);
+  let noOfTries = 5;
+  document.getElementById("noOfTries").innerHTML = "No of tries left: " + noOfTries;
   // Configure the click listener.
   map.addListener("click", (mapsMouseEvent) => {
     // Close the current InfoWindow.
@@ -69,7 +71,15 @@ function initMap() {
             $(".displayHeader").empty();
             $(".displayHeader").html(inputAddress.long_name);
             chart1.destroy();
-            getData($(".displayHeader").html(), quesNo);
+            /*if(getData($(".displayHeader").html(), quesNo, noOfTries)){
+              alert("Correct");
+            }
+            else{
+              noOfTries --;
+              console.log(noOfTries);
+              document.getElementById("noOfTries").innerHTML = "No of tries left: " + noOfTries;
+            }*/
+            console.log(getData($(".displayHeader").html(), quesNo, noOfTries));
           }
         });
         if (checkValid == 0) {
@@ -111,7 +121,7 @@ function initMap() {
     });
 }
 
-function getData(country, quesNo) {
+function getData(country, quesNo, noOfTries) {
   var url = "https://api.covid19api.com/country/" + country;
 
   fetch(url)
@@ -125,7 +135,7 @@ function getData(country, quesNo) {
       $("#totalActive").html(latestData.Active);
       $("#totalRecovered").html(latestData.Recovered);
       $("#deaths").html(latestData.Deaths);
-      game(quesNo, latestData.Recovered, latestData.Deaths, latestData.Active);
+      
 
       chartData = [latestData.Active, latestData.Recovered, latestData.Deaths];
       chartLabels = ["Active", "Recovered", "Deaths"];
@@ -150,6 +160,13 @@ function getData(country, quesNo) {
           responsive: true,
         },
       });
+      /*if(game(noOfTries, quesNo, latestData.Recovered, latestData.Deaths, latestData.Active)){
+        return true;
+      }
+      else{
+        return false;
+      }*/
+      console.log(game(noOfTries, quesNo, latestData.Recovered, latestData.Deaths, latestData.Active));
     });
 }
 
@@ -178,8 +195,7 @@ function questionSelector(){
   return quesNo;
 }
 
-function game(test, recovered, deaths, active){
-  let noOfTries = 5;
+function game(noOfTries, test, recovered, deaths, active){
   fetch("https://api.covid19api.com/summary")
   .then((response) => response.json())
   .then((data) => {
@@ -197,15 +213,15 @@ function game(test, recovered, deaths, active){
         }
         console.log(answerStatus);
         if(answerStatus){
-          alert("orrect");
           return true;
         }
         else{
-          noOfTries --;
           alert("Wrong");
+          return false;
         }
-
-        console.log(noOfTries);
+      }
+      else{
+        alert("You ran out of tries!");
       }
     }
     if(test == 2){
@@ -215,20 +231,21 @@ function game(test, recovered, deaths, active){
         while(i < countriesData.length){
           if(recovered > countriesData[i].TotalRecovered){
             answerStatus = false;
-            noOfTries --;
             break;
           }
           i ++;
         }
         console.log(answerStatus);
         if(answerStatus){
-          alert("Correct");
           return true;
         }
         else{
-          noOfTries --;
           alert("Wrong");
+          return false;
         }
+      }
+      else{
+        alert("You ran out of tries!");
       }
     }
     if(test == 3){
@@ -238,20 +255,23 @@ function game(test, recovered, deaths, active){
         while(i < countriesData.length){
           if(deaths < countriesData[i].TotalDeaths){
             answerStatus = false;
-            noOfTries --;
+            console.log(deaths);
+            console.log(countriesData[i].TotalDeaths);
             break;
           }
           i ++;
         }
         console.log(answerStatus);
         if(answerStatus){
-          alert("Correct");
           return true;
         }
         else{
-          noOfTries --;
           alert("Wrong");
+          return false;
         }
+      }
+      else{
+        alert("You ran out of tries!");
       }
     }
     if(test == 4){
@@ -261,20 +281,21 @@ function game(test, recovered, deaths, active){
         while(i < countriesData.length){
           if(deaths > countriesData[i].TotalDeaths){
             answerStatus = false;
-            noOfTries --;
             break;
           }
           i ++;
         }
         console.log(answerStatus);
         if(answerStatus){
-          alert("Correct");
           return true;
         }
         else{
-          noOfTries --;
           alert("Wrong");
+          return false;
         }
+      }
+      else{
+        alert("You ran out of tries!");
       }
     }
     if(test == 5){
@@ -282,23 +303,25 @@ function game(test, recovered, deaths, active){
         i = 1;
         let answerStatus = true;
         let total = active + deaths + recovered;
+        console.log(total);
         while(i < countriesData.length){
           if(total < countriesData[i].Totalconfirmed){
             answerStatus = false;
-            noOfTries --;
             break;
           }
           i ++;
         }
         console.log(answerStatus);
         if(answerStatus){
-          alert("Correct");
           return true;
         }
         else{
-          noOfTries --;
           alert("Wrong");
+          return false;
         }
+      }
+      else{
+        alert("You ran out of tries!");
       }
     }
   })
@@ -314,7 +337,7 @@ function test(){
     let max = 0;
     let maxCountry = "";
     while(i < countriesData.length){
-      if(countriesData[i].TotalConfirmed > max){
+      if(countriesData[i].TotalRecovered > max){
         max = countriesData[i].TotalRecovered;
         maxCountry = countriesData[i].Country;
       }
