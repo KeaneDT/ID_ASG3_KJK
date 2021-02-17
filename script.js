@@ -30,10 +30,11 @@ function initMap() {
 
   //selects a question
   let quesNo = questionSelector();
-  console.log(quesNo);
+  console.log("Question Number: " + quesNo);
   infoWindow.open(map);
   let noOfTries = 5;
-  document.getElementById("noOfTries").innerHTML = "No of tries left: " + noOfTries;
+  document.getElementById("noOfTries").innerHTML =
+    "No of tries left: " + noOfTries;
   // Configure the click listener.
   map.addListener("click", (mapsMouseEvent) => {
     // Close the current InfoWindow.
@@ -82,6 +83,7 @@ function initMap() {
             console.log(getData($(".displayHeader").html(), quesNo, noOfTries));
           }
         });
+
         if (checkValid == 0) {
           infoWindow.setContent("Invalid Location!");
         }
@@ -122,21 +124,28 @@ function initMap() {
 }
 
 function getData(country, quesNo, noOfTries) {
-  var url = "https://api.covid19api.com/country/" + country;
+  $("#totalActive").empty();
+  $("#totalRecovered").empty();
+  $("#deaths").empty();
 
-  fetch(url)
-    .then((response) => response.json())
-    .then((data) => {
-      // Add code (foreach) for China & US to calculate provinces cases and add them to a variable
-      let latestData = data[data.length - 1];
-      $("#totalActive").empty();
-      $("#totalRecovered").empty();
-      $("#deaths").empty();
+  if (
+    country == "United States" ||
+    country == "United Kingdom" ||
+    country == "China" ||
+    country == "Australia"
+  ) {
+    // add code here
+  } else {
+    axios({
+      method: "get",
+      url: "https://api.covid19api.com/country/" + country,
+    }).then((data) => {
+      console.log(data);
+      let latestData = data.data[data.data.length - 1];
+      console.log(latestData);
       $("#totalActive").html(latestData.Active);
       $("#totalRecovered").html(latestData.Recovered);
       $("#deaths").html(latestData.Deaths);
-      
-
       chartData = [latestData.Active, latestData.Recovered, latestData.Deaths];
       chartLabels = ["Active", "Recovered", "Deaths"];
 
@@ -166,185 +175,184 @@ function getData(country, quesNo, noOfTries) {
       else{
         return false;
       }*/
-      console.log(game(noOfTries, quesNo, latestData.Recovered, latestData.Deaths, latestData.Active));
+      // console.log(
+      //   game(
+      //     noOfTries,
+      //     quesNo,
+      //     latestData.Recovered,
+      //     latestData.Deaths,
+      //     latestData.Active
+      //   )
+      // );
     });
+  }
 }
 
-function questionSelector(){
-  let quesNo = Math.floor((Math.random() * 5) + 1);
-  if(quesNo == 1){
+function questionSelector() {
+  let quesNo = Math.floor(Math.random() * 5 + 1);
+  if (quesNo == 1) {
     //Country with most recovered cases
-    document.getElementById("question").innerHTML = "Select country with most recovered cases";
-  }
-  else if (quesNo == 2){
+    document.getElementById("question").innerHTML =
+      "Select country with most recovered cases";
+  } else if (quesNo == 2) {
     //Country with least recovered cases
-    document.getElementById("question").innerHTML = "Select country with least recovered cases";
-  }
-  else if (quesNo == 3){
+    document.getElementById("question").innerHTML =
+      "Select country with least recovered cases";
+  } else if (quesNo == 3) {
     //Country with most deaths
-    document.getElementById("question").innerHTML = "Select country with most deaths";
-  }
-  else if (quesNo == 4){
+    document.getElementById("question").innerHTML =
+      "Select country with most deaths";
+  } else if (quesNo == 4) {
     //Country with least deaths
-    document.getElementById("question").innerHTML = "Select country with least deaths";
-  }
-  else if (quesNo == 5){
+    document.getElementById("question").innerHTML =
+      "Select country with least deaths";
+  } else if (quesNo == 5) {
     //Country with most overall cases
-    document.getElementById("question").innerHTML = "Select country with most overall cases(including past deaths and recovered cases)";
+    document.getElementById("question").innerHTML =
+      "Select country with most overall cases(including past deaths and recovered cases)";
   }
   return quesNo;
 }
 
-function game(noOfTries, test, recovered, deaths, active){
+function game(noOfTries, test, recovered, deaths, active) {
   fetch("https://api.covid19api.com/summary")
-  .then((response) => response.json())
-  .then((data) => {
-    let countriesData = data.Countries;
-    if(test == 1){
-      if(noOfTries > 0){
-        i = 1;
-        let answerStatus = true;
-        while(i < countriesData.length){
-          if(recovered < countriesData[i].TotalRecovered){
-            answerStatus = false;
-            break;
+    .then((response) => response.json())
+    .then((data) => {
+      let countriesData = data.Countries;
+      if (test == 1) {
+        if (noOfTries > 0) {
+          i = 1;
+          let answerStatus = true;
+          while (i < countriesData.length) {
+            if (recovered < countriesData[i].TotalRecovered) {
+              answerStatus = false;
+              break;
+            }
+            i++;
           }
-          i ++;
-        }
-        console.log(answerStatus);
-        if(answerStatus){
-          return true;
-        }
-        else{
-          alert("Wrong");
-          return false;
-        }
-      }
-      else{
-        alert("You ran out of tries!");
-      }
-    }
-    if(test == 2){
-      if(noOfTries > 0){
-        i = 1;
-        let answerStatus = true;
-        while(i < countriesData.length){
-          if(recovered > countriesData[i].TotalRecovered){
-            answerStatus = false;
-            break;
+          console.log(answerStatus);
+          if (answerStatus) {
+            return true;
+          } else {
+            alert("Wrong");
+            return false;
           }
-          i ++;
-        }
-        console.log(answerStatus);
-        if(answerStatus){
-          return true;
-        }
-        else{
-          alert("Wrong");
-          return false;
+        } else {
+          alert("You ran out of tries!");
         }
       }
-      else{
-        alert("You ran out of tries!");
-      }
-    }
-    if(test == 3){
-      if(noOfTries > 0){
-        i = 1;
-        let answerStatus = true;
-        while(i < countriesData.length){
-          if(deaths < countriesData[i].TotalDeaths){
-            answerStatus = false;
-            console.log(deaths);
-            console.log(countriesData[i].TotalDeaths);
-            break;
+      if (test == 2) {
+        if (noOfTries > 0) {
+          i = 1;
+          let answerStatus = true;
+          while (i < countriesData.length) {
+            if (recovered > countriesData[i].TotalRecovered) {
+              answerStatus = false;
+              break;
+            }
+            i++;
           }
-          i ++;
-        }
-        console.log(answerStatus);
-        if(answerStatus){
-          return true;
-        }
-        else{
-          alert("Wrong");
-          return false;
-        }
-      }
-      else{
-        alert("You ran out of tries!");
-      }
-    }
-    if(test == 4){
-      if(noOfTries > 0){
-        i = 1;
-        let answerStatus = true;
-        while(i < countriesData.length){
-          if(deaths > countriesData[i].TotalDeaths){
-            answerStatus = false;
-            break;
+          //console.log(answerStatus);
+          if (answerStatus) {
+            return true;
+          } else {
+            alert("Wrong");
+            return false;
           }
-          i ++;
-        }
-        console.log(answerStatus);
-        if(answerStatus){
-          return true;
-        }
-        else{
-          alert("Wrong");
-          return false;
+        } else {
+          alert("You ran out of tries!");
         }
       }
-      else{
-        alert("You ran out of tries!");
-      }
-    }
-    if(test == 5){
-      if(noOfTries > 0){
-        i = 1;
-        let answerStatus = true;
-        let total = active + deaths + recovered;
-        console.log(total);
-        while(i < countriesData.length){
-          if(total < countriesData[i].Totalconfirmed){
-            answerStatus = false;
-            break;
+      if (test == 3) {
+        if (noOfTries > 0) {
+          i = 1;
+          let answerStatus = true;
+          while (i < countriesData.length) {
+            if (deaths < countriesData[i].TotalDeaths) {
+              answerStatus = false;
+              console.log(deaths);
+              console.log(countriesData[i].TotalDeaths);
+              break;
+            }
+            i++;
           }
-          i ++;
-        }
-        console.log(answerStatus);
-        if(answerStatus){
-          return true;
-        }
-        else{
-          alert("Wrong");
-          return false;
+          console.log(answerStatus);
+          if (answerStatus) {
+            return true;
+          } else {
+            alert("Wrong");
+            return false;
+          }
+        } else {
+          alert("You ran out of tries!");
         }
       }
-      else{
-        alert("You ran out of tries!");
+      if (test == 4) {
+        if (noOfTries > 0) {
+          i = 1;
+          let answerStatus = true;
+          while (i < countriesData.length) {
+            if (deaths > countriesData[i].TotalDeaths) {
+              answerStatus = false;
+              break;
+            }
+            i++;
+          }
+          console.log(answerStatus);
+          if (answerStatus) {
+            return true;
+          } else {
+            alert("Wrong");
+            return false;
+          }
+        } else {
+          alert("You ran out of tries!");
+        }
       }
-    }
-  })
+      if (test == 5) {
+        if (noOfTries > 0) {
+          i = 1;
+          let answerStatus = true;
+          let total = active + deaths + recovered;
+          console.log(total);
+          while (i < countriesData.length) {
+            if (total < countriesData[i].Totalconfirmed) {
+              answerStatus = false;
+              break;
+            }
+            i++;
+          }
+          console.log(answerStatus);
+          if (answerStatus) {
+            return true;
+          } else {
+            alert("Wrong");
+            return false;
+          }
+        } else {
+          alert("You ran out of tries!");
+        }
+      }
+    });
 }
 
 //Ignore this. It is just to find out the answer for the ques
-function test(){
+function test() {
   fetch("https://api.covid19api.com/summary")
-  .then((response) => response.json())
-  .then((data) => {
-    let countriesData = data.Countries;
-    let i = 1;
-    let max = 0;
-    let maxCountry = "";
-    while(i < countriesData.length){
-      if(countriesData[i].TotalRecovered > max){
-        max = countriesData[i].TotalRecovered;
-        maxCountry = countriesData[i].Country;
+    .then((response) => response.json())
+    .then((data) => {
+      let countriesData = data.Countries;
+      let i = 1;
+      let max = 0;
+      let maxCountry = "";
+      while (i < countriesData.length) {
+        if (countriesData[i].TotalRecovered > max) {
+          max = countriesData[i].TotalRecovered;
+          maxCountry = countriesData[i].Country;
+        }
+        i++;
       }
-      i++;
-    }
-    console.log(max);
-    console.log(maxCountry);
-  })
+      console.log(max);
+      console.log(maxCountry);
+    });
 }
-
