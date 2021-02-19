@@ -415,10 +415,9 @@ function game(noOfTries, quesNo, recovered, deaths, active) {
           i++;
         }
         if (answerStatus) {
-          alert(
-            "You got the answer correct! Please refresh the page for another question"
-          );
+          alert("You got the answer correct!");
           addPoints(noOfTries);
+          $("#question").empty();
         } else {
           alert("You got the answer wrong! Please try again!");
           noOfTries--;
@@ -431,6 +430,26 @@ function game(noOfTries, quesNo, recovered, deaths, active) {
 }
 
 function addPoints(tries) {
+  points += tries * 10;
+
+  let saveObject = {
+    Points: points,
+    BoughtNews: checkPurchase,
+  };
+
+  saveFile = localStorage.getItem("SaveData");
+  saveFile = JSON.parse(saveFile);
+
+  if (saveFile !== null) {
+    saveFile.push(saveObject);
+    localStorage.clear();
+    localStorage.setItem("SaveData", JSON.stringify(saveFile));
+  } else {
+    saveFile = [];
+    saveFile.push(saveObject);
+    localStorage.clear();
+    localStorage.setItem("SaveData", JSON.stringify(saveFile));
+  }
   
   if (localStorage.points) {
     localStorage.points = Number(localStorage.points) + tries * 10;
@@ -441,13 +460,13 @@ function addPoints(tries) {
   }
 }
 
-function store() {
-  document
-    .getElementsByClassName("lead buyNews")
-    .addEventListener("click", function getPlaces() {
-      purchaseNews();
-    });
-}
+// function store() {
+//   document
+//     .getElementsByClassName("lead buyNews")
+//     .addEventListener("click", function getPlaces() {
+//       purchaseNews();
+//     });
+// }
 
 //Ignore this. It is just to find out the answer for the ques
 function tester() {
@@ -468,4 +487,8 @@ function tester() {
       console.log(max);
       console.log(maxCountry);
     });
+}
+
+if ($("#question").is(":empty")) {
+  $("#question").append("Please refresh the page");
 }
