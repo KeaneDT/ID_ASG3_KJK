@@ -9,7 +9,7 @@ let userAddress;
 let markers = [];
 
 let points = 999;
-let checkPurchase = 0;
+let checkPurchase = 5;
 
 function initMap() {
   //displays a google map
@@ -151,20 +151,28 @@ function purchaseBadge() {
 }
 
 function loadBadge() {
+
+  $(".badgeBox").empty()
+
   if (checkPurchase == 0) {
     alert("You have not purchased any badges! Load Data or Play Some More!");
   } else if (checkPurchase == 1) {
     
+    
   } else if (checkPurchase == 2) {
+    
+
 
   } else if (checkPurchase == 3) {
+    
+
 
   } else if (checkPurchase == 4) {
+  
+
 
   } else if (checkPurchase == 5) {
-
-  } else {
-    alert("You have gotten all the badges, Congratulations!");
+    
   }
 }
 
