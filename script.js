@@ -142,7 +142,6 @@ function purchaseBadge() {
       if (r == true) {
         points -= 50;
         checkPurchase += 1;
-        $(".pointBox").hide();
         alert("Purchase successful! You have " + points + " points remaining!");
         localStorage.setItem("Points", points);
         localStorage.setItem("Purchase", checkPurchase);
@@ -629,6 +628,7 @@ function showPoint() {
     points = parseInt(localStorage.getItem("Points"));
     checkPurchase = parseInt(localStorage.getItem("Purchase"));
   }
+  $(".showPoint").html("Refresh Points");
   $(".pointBox").empty();
   $(".pointBox").append("Points: " + points);
 }
