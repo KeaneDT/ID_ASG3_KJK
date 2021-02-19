@@ -1,8 +1,5 @@
-/*$(document).ready(initMap());
-$(document).ready(function(){
-  $(".buyNews").click(purchaseNews);
-  $(".refreshNews").click(loadNews);
-})*/
+$(".buyNews").click(purchaseNews);
+$(".refreshNews").click(loadNews);
 
 let map;
 let home;
@@ -10,6 +7,7 @@ let geocoder;
 let userAddress;
 let markers = [];
 
+let points = 0;
 let checkPurchase = 0;
 
 function initMap() {
@@ -34,7 +32,7 @@ function initMap() {
 
   //selects a question
   let quesNo = questionSelector();
-  console.log("Question Number: " + quesNo);
+  //console.log("Question Number: " + quesNo);
   infoWindow.open(map);
   let noOfTries = 5;
   document.getElementById("noOfTries").innerHTML =
@@ -77,10 +75,9 @@ function initMap() {
             $(".displayHeader").html(inputAddress.long_name);
             chart1.destroy();
             getData($(".displayHeader").html(), quesNo, noOfTries);
-            if(noOfTries > 0){
-              noOfTries --;
-            }
-            else{
+            if (noOfTries > 0) {
+              noOfTries--;
+            } else {
               alert("You have no tries left! Please refresh the page!");
             }
           }
@@ -137,23 +134,23 @@ function purchaseNews() {
       if (r == true) {
         points -= 999;
         checkPurchase = 1;
-        alert("Points have been deducted. You have " + points + " points remaining!");
+        alert(
+          "Points have been deducted. You have " + points + " points remaining!"
+        );
         $(".buyNews").css("background-color", "Gray");
         $(".buyNews").empty();
         $(".buyNews").append("Bought");
       }
     }
-  }
-  else {
+  } else {
     alert("You have already gotten this feature!");
   }
 }
 
-function loadNews(){
+function loadNews() {
   if (checkPurchase == 0) {
     alert("You have not purchased any features! Load Data or Play Some More!");
-  }
-  else if (checkPurchase == 1) {
+  } else if (checkPurchase == 1) {
     //Add fetch etc to News API!
   }
 }
@@ -205,10 +202,10 @@ function getData(country, quesNo, noOfTries) {
         deaths += data.data[i].Deaths;
       }
       //For some reason US numbers are twice the actual number
-      if (country=="United States"){
-        active = Math.round(active/2);
-        recovered = Math.round(recovered/2);
-        deaths = Math.round(deaths/2);
+      if (country == "United States") {
+        active = Math.round(active / 2);
+        recovered = Math.round(recovered / 2);
+        deaths = Math.round(deaths / 2);
       }
 
       game(noOfTries, quesNo, recovered, deaths, active);
@@ -252,7 +249,13 @@ function getData(country, quesNo, noOfTries) {
       chartData = [latestData.Active, latestData.Recovered, latestData.Deaths];
       chartLabels = ["Active", "Recovered", "Deaths"];
 
-      game(noOfTries, quesNo, latestData.Recovered, latestData.Deaths, latestData.Active);
+      game(
+        noOfTries,
+        quesNo,
+        latestData.Recovered,
+        latestData.Deaths,
+        latestData.Active
+      );
 
       var ctx = document.getElementById("covidChart").getContext("2d");
       chart1 = new Chart(ctx, {
@@ -304,7 +307,7 @@ function questionSelector() {
   } else if (quesNo == 5) {
     //Country with most overall cases
     document.getElementById("question").innerHTML =
-      "Select country with most overall cases(including past deaths and recovered cases)";
+      "Select country with most overall cases (including past deaths and recovered cases)";
   }
   return quesNo;
 }
@@ -314,128 +317,136 @@ function game(noOfTries, quesNo, recovered, deaths, active) {
     method: "get",
     url: "https://api.covid19api.com/summary",
   }).then((main) => {
-      let countriesData = main.data.Countries;
-      if(noOfTries > 0){
-        if(quesNo == 1){
-          i = 1;
-          let answerStatus = true;
-          while (i < countriesData.length) {
-            if (recovered < countriesData[i].TotalRecovered) {
-              answerStatus = false;
-              break;
-            }
-            i++;
+    let countriesData = main.data.Countries;
+    if (noOfTries > 0) {
+      if (quesNo == 1) {
+        i = 1;
+        let answerStatus = true;
+        while (i < countriesData.length) {
+          if (recovered < countriesData[i].TotalRecovered) {
+            answerStatus = false;
+            break;
           }
-          if (answerStatus) {
-            alert("You got the answer correct! Please refresh the page for another question");
-            addPoints(noOfTries);
-          } 
-          else {
-            alert("You got the answer wrong! Please try again!");
-            noOfTries--;
-            document.getElementById("noOfTries").innerHTML = "No of tries left: " + noOfTries;
-          }
+          i++;
         }
-        else if(quesNo == 2){
-          i = 1;
-          let answerStatus = true;
-          while (i < countriesData.length) {
-            if (recovered > countriesData[i].TotalRecovered) {
-              answerStatus = false;
-              break;
-            }
-            i++;
-          }
-          if (answerStatus) {
-            alert("You got the answer correct! Please refresh the page for another question");
-            addPoints(noOfTries);
-          } 
-          else {
-            alert("You got the answer wrong! Please try again!");
-            noOfTries--;
-            document.getElementById("noOfTries").innerHTML = "No of tries left: " + noOfTries;
-          }
+        if (answerStatus) {
+          alert(
+            "You got the answer correct! Please refresh the page for another question"
+          );
+          addPoints(noOfTries);
+        } else {
+          alert("You got the answer wrong! Please try again!");
+          noOfTries--;
+          document.getElementById("noOfTries").innerHTML =
+            "No of tries left: " + noOfTries;
         }
-        else if(quesNo == 3){
-          i = 1;
-          let answerStatus = true;
-          while (i < countriesData.length) {
-            if (deaths < countriesData[i].TotalDeaths) {
-              answerStatus = false;
-              break;
-            }
-            i++;
+      } else if (quesNo == 2) {
+        i = 1;
+        let answerStatus = true;
+        while (i < countriesData.length) {
+          if (recovered > countriesData[i].TotalRecovered) {
+            answerStatus = false;
+            break;
           }
-          if (answerStatus) {
-            alert("You got the answer correct! Please refresh the page for another question");
-            addPoints(noOfTries);
-          } 
-          else {
-            alert("You got the answer wrong! Please try again!");
-            noOfTries--;
-            document.getElementById("noOfTries").innerHTML = "No of tries left: " + noOfTries;
-          }
+          i++;
         }
-        else if(quesNo == 4){
-          i = 1;
-          let answerStatus = true;
-          while (i < countriesData.length) {
-            if (deaths > countriesData[i].TotalDeaths) {
-              answerStatus = false;
-              break;
-            }
-            i++;
-          }
-          if (answerStatus) {
-            alert("You got the answer correct! Please refresh the page for another question");
-            addPoints(noOfTries);
-          } 
-          else {
-            alert("You got the answer wrong! Please try again!");
-            noOfTries--;
-            document.getElementById("noOfTries").innerHTML = "No of tries left: " + noOfTries;
-          }
+        if (answerStatus) {
+          alert(
+            "You got the answer correct! Please refresh the page for another question"
+          );
+          addPoints(noOfTries);
+        } else {
+          alert("You got the answer wrong! Please try again!");
+          noOfTries--;
+          document.getElementById("noOfTries").innerHTML =
+            "No of tries left: " + noOfTries;
         }
-        else if(quesNo == 5){
-          i = 1;
-          let answerStatus = true;
-          let total = active + deaths + recovered;
-          while (i < countriesData.length) {
-            if (total < countriesData[i].TotalConfirmed) {
-              answerStatus = false;
-              break;
-            }
-            i++;
+      } else if (quesNo == 3) {
+        i = 1;
+        let answerStatus = true;
+        while (i < countriesData.length) {
+          if (deaths < countriesData[i].TotalDeaths) {
+            answerStatus = false;
+            break;
           }
-          if (answerStatus) {
-            alert("You got the answer correct! Please refresh the page for another question");
-            addPoints(noOfTries);
-          } 
-          else {
-            alert("You got the answer wrong! Please try again!");
-            noOfTries--;
-            document.getElementById("noOfTries").innerHTML = "No of tries left: " + noOfTries;
+          i++;
+        }
+        if (answerStatus) {
+          alert(
+            "You got the answer correct! Please refresh the page for another question"
+          );
+          addPoints(noOfTries);
+        } else {
+          alert("You got the answer wrong! Please try again!");
+          noOfTries--;
+          document.getElementById("noOfTries").innerHTML =
+            "No of tries left: " + noOfTries;
+        }
+      } else if (quesNo == 4) {
+        i = 1;
+        let answerStatus = true;
+        while (i < countriesData.length) {
+          if (deaths > countriesData[i].TotalDeaths) {
+            answerStatus = false;
+            break;
           }
+          i++;
+        }
+        if (answerStatus) {
+          alert(
+            "You got the answer correct! Please refresh the page for another question"
+          );
+          addPoints(noOfTries);
+        } else {
+          alert("You got the answer wrong! Please try again!");
+          noOfTries--;
+          document.getElementById("noOfTries").innerHTML =
+            "No of tries left: " + noOfTries;
+        }
+      } else if (quesNo == 5) {
+        i = 1;
+        let answerStatus = true;
+        let total = active + deaths + recovered;
+        while (i < countriesData.length) {
+          if (total < countriesData[i].TotalConfirmed) {
+            answerStatus = false;
+            break;
+          }
+          i++;
+        }
+        if (answerStatus) {
+          alert(
+            "You got the answer correct! Please refresh the page for another question"
+          );
+          addPoints(noOfTries);
+        } else {
+          alert("You got the answer wrong! Please try again!");
+          noOfTries--;
+          document.getElementById("noOfTries").innerHTML =
+            "No of tries left: " + noOfTries;
         }
       }
-    });
-}
-
-function addPoints(tries){
-  if(localStorage.points){
-    localStorage.points = Number(localStorage.points) + (tries*10);
-    console.log(localStorage.points);
-  }
-  else{
-    localStorage.points = (tries*10);
-    console.log(localStorage.points);
-  }
-}
-
-function store(){
-  document.getElementsByClassName("lead buyNews").addEventListener("click", function getPlaces(){
-    purchaseNews();
+    }
   });
+}
+
+function addPoints(tries) {
+  
+  if (localStorage.points) {
+    localStorage.points = Number(localStorage.points) + tries * 10;
+    console.log(localStorage.points);
+  } else {
+    localStorage.points = tries * 10;
+    console.log(localStorage.points);
+  }
+}
+
+function store() {
+  document
+    .getElementsByClassName("lead buyNews")
+    .addEventListener("click", function getPlaces() {
+      purchaseNews();
+    });
 }
 
 //Ignore this. It is just to find out the answer for the ques
