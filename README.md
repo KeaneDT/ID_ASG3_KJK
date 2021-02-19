@@ -21,20 +21,21 @@ It consists of 6 .xd files, 3 for the Desktop view and the other 3 for the mobil
 
 # Features implemented
 
--Clicking anywhere on the Google Maps API brings up the Country name, using reverse-geocoding.
--Clicking on invalid locations on the map bring up the "Invalid Location" infowindow.
--Once a valid location has been clicked on, the relevant Covid-19 data is taken from the Covid-19 API and appended in the statistics box.
--A doughnut chart from Chats.JS is generated using the information obtained from the API. (Corresponds with the respective colours)
--A game can be run that selects a random question from 5 different questions in the JavaScript file which gives the user 5 attempts.
--Users are rewared points based on the amount of attempts remaining.
--Users can then proceed to the Store page to spend the points on the Covid-19 News feature which uses the News API to get relevant news articles.
--Users have the ability to save and load their progress to and from the LocalStorage.
--Retrieving the values from the local storage would first check that the local storage is not empty.
+- Clicking anywhere on the Google Maps API brings up the Country name, using reverse-geocoding.
+- Clicking on invalid locations on the map bring up the "Invalid Location" infowindow.
+- Once a valid location has been clicked on, the relevant Covid-19 data is taken from the Covid-19 API and appended in the statistics box.
+- A doughnut chart from Chats.JS is generated using the information obtained from the API. (Corresponds with the respective colours)
+- A game can be run that selects a random question from 5 different questions in the JavaScript file which gives the user 5 attempts.
+- Users are rewared points based on the amount of attempts remaining.
+- Users can then proceed to the Store page to spend the points on the Covid-19 News feature which uses the News API to get relevant news articles.
+- Users have the ability to save and load their progress to and from the LocalStorage.
+- Retrieving the values from the local storage would first check that the local storage is not empty.
 
 # Problems Faced
 
--The Covid-19 API used (https://covid19api.com/) sometimes has inaccurate data such as 0 recovered cases/0 active cases.
--Using the Covid-19 API too many times causes the localhost to get blocked due to the CORS policy. We tried using Axios and a proxy server to mitigate this problem but to no avail.
+- The Covid-19 API used (https://covid19api.com/) sometimes has inaccurate data such as 0 recovered cases/0 active cases.
+- Using the Covid-19 API too many times causes the localhost to get blocked due to the CORS policy. We tried using Axios and a proxy server to mitigate this problem but to no avail.
+- Sometimes the map will not load and will require the page to be refreshed.
 
 # Technology used
 
