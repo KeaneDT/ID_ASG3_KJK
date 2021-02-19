@@ -33,8 +33,9 @@ It consists of 6 .xd files, 3 for the Desktop view and the other 3 for the mobil
 
 # Problems Faced
 
--The Covid-19 API used (https://covid19api.com/) sometimes has inaccurate data such as 0 recovered cases/0 active cases.
--Using the Covid-19 API too many times causes the localhost to get blocked due to the CORS policy. We tried using Axios and a proxy server to mitigate this problem but to no avail.
+- The Covid-19 API used (https://covid19api.com/) sometimes has inaccurate data such as 0 recovered cases/0 active cases.
+- Using the Covid-19 API too many times causes the localhost to get blocked due to the CORS policy. We tried using Axios and a proxy server to mitigate this problem but to no avail.
+- Sometimes the map will not load and will require the page to be refreshed.
 
 # Technology used
 
