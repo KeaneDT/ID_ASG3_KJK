@@ -487,12 +487,7 @@ a:hover {
   background-color: black;
   color: white;
 }
-.showPoint, .hint {
-  display:inline-block;
-}
-.save, .load {
-  display:inline-block;
-}
+
 #map {
   width: 100%;
   height: 580px;
