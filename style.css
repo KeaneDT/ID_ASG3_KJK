@@ -483,6 +483,12 @@ a:hover {
   font-size: 40px;
   font-weight: 500;
 }
+
+.instructions{
+  padding: 3%;
+  font-size: large;
+}
+
 .questionBox{
   background-color: black;
   color: white;
