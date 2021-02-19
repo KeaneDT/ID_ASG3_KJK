@@ -272,7 +272,7 @@ function getData(country, quesNo, noOfTries) {
           responsive: true,
         },
       });
-      game(noOfTries, quesNo, recovered, deaths, active);
+      game(noOfTries, quesNo, recovered, deaths, active, country);
     });
   } else {
     axios({
@@ -311,7 +311,8 @@ function getData(country, quesNo, noOfTries) {
         quesNo,
         latestData.Recovered,
         latestData.Deaths,
-        latestData.Active
+        latestData.Active,
+        country
       );
     });
   }
@@ -324,7 +325,7 @@ function getData(country, quesNo, noOfTries) {
 
 function questionSelector() {
   $("#noOfTries").show();
-  let quesNo = Math.floor(Math.random() * 5 + 1);
+  let quesNo = Math.floor(Math.random() * 12 + 1);
   if (quesNo == 1) {
     //Country with most recovered cases
     document.getElementById("question").innerHTML =
@@ -345,11 +346,39 @@ function questionSelector() {
     //Country with most overall cases
     document.getElementById("question").innerHTML =
       "Select country with most overall cases (including past deaths and recovered cases)";
+  } else if(quesNo == 6){
+    //In which country was the first cluster reported
+    document.getElementById("question").innerHTML =
+      "In which country was the first cluster of cases reported?";
+  } else if(quesNo == 7){
+    //Which country was the next (outside of the first country where the first cluster was reported) to report a covid-19 case? 
+    document.getElementById("question").innerHTML =
+      "Which country was the next (outside of the first country where the first cluster was reported) to report a covid-19 case?";
+  } else if(quesNo == 8){
+    //Which was the first European country to report the first covid-19 case?
+    document.getElementById("question").innerHTML =
+      "Which was the first European country to report the first covid-19 case?";
+  } else if(quesNo == 9){
+    //First country to declare lockdown
+    document.getElementById("question").innerHTML =
+      "Which was the first country to enforce quarantine and lockdown of its cities?";
+  } else if(quesNo == 10){
+    //First european country to declare lock down
+    document.getElementById("question").innerHTML =
+      "Which was the first European country to declare a nation-wide lockdown?";
+  } else if(quesNo == 11){
+    //First country in north america to report a covid case
+    document.getElementById("question").innerHTML =
+      "Which country in North America was the first to report a covid-19 case?";
+  } else if(quesNo == 12){
+    //First country in South america to report a covid case
+    document.getElementById("question").innerHTML =
+      "Which country in South America was the first to report a covid-19 case?";
   }
   return quesNo;
 }
 
-function game(noOfTries, quesNo, recovered, deaths, active) {
+function game(noOfTries, quesNo, recovered, deaths, active, country) {
   axios({
     method: "get",
     url: "https://api.covid19api.com/summary",
@@ -472,6 +501,104 @@ function game(noOfTries, quesNo, recovered, deaths, active) {
           document.getElementById("noOfTries").innerHTML =
             "No of tries left: " + noOfTries;
         }
+      } else if(quesNo == 6){
+        if(country == "China"){
+          alert(
+            "You got the answer correct! Please refresh for another question"
+          );
+          addPoints(noOfTries);
+          $("#question").html("Refresh for the next question!");
+          $("#noOfTries").hide();
+        } else{
+          alert("You got the answer wrong! Please try again!");
+          noOfTries--;
+          document.getElementById("noOfTries").innerHTML =
+            "No of tries left: " + noOfTries;
+        }
+      } else if(quesNo == 7){
+        if(country == "Thailand"){
+          alert(
+            "You got the answer correct! Please refresh for another question"
+          );
+          addPoints(noOfTries);
+          $("#question").html("Refresh for the next question!");
+          $("#noOfTries").hide();
+        } else{
+          alert("You got the answer wrong! Please try again!");
+          noOfTries--;
+          document.getElementById("noOfTries").innerHTML =
+            "No of tries left: " + noOfTries;
+        }
+      } else if(quesNo == 8){
+        if(country == "France"){
+          alert(
+            "You got the answer correct! Please refresh for another question"
+          );
+          addPoints(noOfTries);
+          $("#question").html("Refresh for the next question!");
+          $("#noOfTries").hide();
+        } else{
+          alert("You got the answer wrong! Please try again!");
+          noOfTries--;
+          document.getElementById("noOfTries").innerHTML =
+            "No of tries left: " + noOfTries;
+        }
+      } else if(quesNo == 9){
+        if(country == "China"){
+          alert(
+            "You got the answer correct! Please refresh for another question"
+          );
+          addPoints(noOfTries);
+          $("#question").html("Refresh for the next question!");
+          $("#noOfTries").hide();
+        } else{
+          alert("You got the answer wrong! Please try again!");
+          noOfTries--;
+          document.getElementById("noOfTries").innerHTML =
+            "No of tries left: " + noOfTries;
+        }
+      } else if(quesNo == 10){
+        if(country == "Italy"){
+          alert(
+            "You got the answer correct! Please refresh for another question"
+          );
+          addPoints(noOfTries);
+          $("#question").html("Refresh for the next question!");
+          $("#noOfTries").hide();
+        } else{
+          alert("You got the answer wrong! Please try again!");
+          noOfTries--;
+          document.getElementById("noOfTries").innerHTML =
+            "No of tries left: " + noOfTries;
+        }
+      } else if(quesNo == 11){
+        if(country == "United States"){
+          alert(
+            "You got the answer correct! Please refresh for another question"
+          );
+          addPoints(noOfTries);
+          $("#question").html("Refresh for the next question!");
+          $("#noOfTries").hide();
+        } else{
+          alert("You got the answer wrong! Please try again!");
+          noOfTries--;
+          document.getElementById("noOfTries").innerHTML =
+            "No of tries left: " + noOfTries;
+        }
+      } else if(quesNo == 12){
+        if(country == "Brazil"){
+          alert(
+            "You got the answer correct! Please refresh for another question"
+          );
+          addPoints(noOfTries);
+          $("#question").html("Refresh for the next question!");
+          $("#noOfTries").hide();
+        } else{
+          alert("You got the answer wrong! Please try again!");
+          noOfTries--;
+          document.getElementById("noOfTries").innerHTML =
+            "No of tries left: " + noOfTries;
+        }
       }
     }
   });
@@ -528,7 +655,7 @@ function clearData() {
   }
 }
 
-//Ignore this. It is just to find out the answer for the ques
+/*Ignore this. It is just to find out the answer for the ques
 function tester() {
   fetch("https://api.covid19api.com/summary")
     .then((response) => response.json())
@@ -547,7 +674,7 @@ function tester() {
       console.log(max);
       console.log(maxCountry);
     });
-}
+}*/
 
 function refresh() {
   location.reload();
