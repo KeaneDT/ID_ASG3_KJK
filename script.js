@@ -430,25 +430,17 @@ function game(noOfTries, quesNo, recovered, deaths, active) {
 }
 
 function addPoints(tries) {
-  points += tries * 10;
+  //points += tries * 10;
+  // let saveObject = {
+  //   Points: points,
+  //   BoughtNews: checkPurchase,
+  // };
+  
+  storedPoints = localStorage.getItem("Points");
+  storedPurchase = localStorage.getItem("Purchase");
 
-  let saveObject = {
-    Points: points,
-    BoughtNews: checkPurchase,
-  };
-
-  saveFile = localStorage.getItem("SaveData");
-  saveFile = JSON.parse(saveFile);
-
-  if (saveFile !== null) {
-    saveFile.push(saveObject);
-    localStorage.clear();
-    localStorage.setItem("SaveData", JSON.stringify(saveFile));
-  } else {
-    saveFile = [];
-    saveFile.push(saveObject);
-    localStorage.clear();
-    localStorage.setItem("SaveData", JSON.stringify(saveFile));
+  if ("Points" in localStorage){
+    
   }
   
   if (localStorage.points) {
