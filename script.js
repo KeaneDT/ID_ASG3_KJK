@@ -7,7 +7,7 @@ let geocoder;
 let userAddress;
 let markers = [];
 
-let points = 999;
+let points = 0;
 let checkPurchase = 0;
 
 function initMap() {
@@ -123,8 +123,12 @@ function initMap() {
     });
 }
 
-//Change point value (currently 999) to final value
 function purchaseBadge() {
+  if ("Points" in localStorage) {
+    points = parseInt(localStorage.getItem("Points"));
+    checkPurchase = parseInt(localStorage.getItem("Purchase"));
+  }
+
   if (checkPurchase < 5) {
     if (points < 50) {
       alert("You have insufficient points!");
@@ -135,6 +139,9 @@ function purchaseBadge() {
       if (r == true) {
         points -= 50;
         checkPurchase += 1;
+        alert("Purchase successful! You have " + points + " points remaining!");
+        localStorage.setItem("Points", points);
+        localStorage.setItem("Purchase", checkPurchase);
         if (checkPurchase == 5) {
           alert("Congratulations you have gotten all 5 badges!");
           $(".buyBadge").css("background-color", "Gray");
@@ -152,6 +159,10 @@ function purchaseBadge() {
 }
 
 function loadBadge() {
+  if ("Points" in localStorage) {
+    points = parseInt(localStorage.getItem("Points"));
+    checkPurchase = parseInt(localStorage.getItem("Purchase"));
+  }
   $(".refreshBadge").html("Refresh Badges");
   if (checkPurchase == 0) {
     alert("You have not purchased any badges! Load Data or Play Some More!");
@@ -436,7 +447,9 @@ function game(noOfTries, quesNo, recovered, deaths, active) {
           i++;
         }
         if (answerStatus) {
-          alert("You got the answer correct!");
+          alert(
+            "You got the answer correct! Please refresh the page for another question"
+          );
           addPoints(noOfTries);
           $("#question").empty();
         } else {
@@ -451,14 +464,12 @@ function game(noOfTries, quesNo, recovered, deaths, active) {
 }
 
 function addPoints(tries) {
-  storedPoints = localStorage.getItem("Points");
-  storedPurchase = localStorage.getItem("Purchase");
-
   if ("Points" in localStorage) {
-    points = localStorage.getItem("Points");
-    checkPurchase = localStorage.getItem("Purchase");
+    points = parseInt(localStorage.getItem("Points"));
+    checkPurchase = parseInt(localStorage.getItem("Purchase"));
 
     points += tries * 10;
+    //console.log("Points: " + points);
     localStorage.clear();
 
     localStorage.setItem("Points", points);
