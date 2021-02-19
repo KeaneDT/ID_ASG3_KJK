@@ -1,5 +1,6 @@
-$(".buyNews").click(purchaseNews);
-$(".refreshNews").click(loadNews);
+$(".buyBadge").click(purchaseBadge);
+$(".refreshBadge").click(loadBadge);
+
 
 let map;
 let home;
@@ -7,7 +8,7 @@ let geocoder;
 let userAddress;
 let markers = [];
 
-let points = 0;
+let points = 999;
 let checkPurchase = 0;
 
 function initMap() {
@@ -124,35 +125,46 @@ function initMap() {
 }
 
 //Change point value (currently 999) to final value
-function purchaseNews() {
-  if (checkPurchase == 0) {
-    if (points < 999) {
-      alert("You have Insufficient Points!");
-    } else if (points >= 999) {
-      var r = confirm(
-        "Clicking OK will confirm purchase. Are you sure you want to continue?"
-      );
-      if (r == true) {
-        points -= 999;
-        checkPurchase = 1;
-        alert(
-          "Points have been deducted. You have " + points + " points remaining!"
-        );
-        $(".buyNews").css("background-color", "Gray");
-        $(".buyNews").empty();
-        $(".buyNews").append("Bought");
-      }
-    }
-  } else {
-    alert("You have already gotten this feature!");
-  }
+function purchaseBadge() {
+
+  // if (checkPurchase == 0) {
+  //   if (points < 999) {
+  //     alert("You have Insufficient Points!");
+  //   } else if (points >= 999) {
+  //     var r = confirm(
+  //       "Clicking OK will confirm purchase. Are you sure you want to continue?"
+  //     );
+  //     if (r == true) {
+  //       points -= 50;
+  //       checkPurchase = 1;
+  //       alert(
+  //         "Points have been deducted. You have " + points + " points remaining!"
+  //       );
+  //       $(".buyBadge").css("background-color", "Gray");
+  //       $(".buyBadge").empty();
+  //       $(".buyBadge").append("Bought");
+  //     }
+  //   }
+  // } else {
+  //   alert("You have already gotten this feature!");
+  // }
 }
 
-function loadNews() {
+function loadBadge() {
   if (checkPurchase == 0) {
-    alert("You have not purchased any features! Load Data or Play Some More!");
+    alert("You have not purchased any badges! Load Data or Play Some More!");
   } else if (checkPurchase == 1) {
-    //Add fetch etc to News API!
+    
+  } else if (checkPurchase == 2) {
+
+  } else if (checkPurchase == 3) {
+
+  } else if (checkPurchase == 4) {
+
+  } else if (checkPurchase == 5) {
+
+  } else {
+    alert("You have gotten all the badges, Congratulations!");
   }
 }
 
@@ -209,8 +221,6 @@ function getData(country, quesNo, noOfTries) {
         deaths = Math.round(deaths / 2);
       }
 
-      game(noOfTries, quesNo, recovered, deaths, active);
-
       $("#totalActive").html(active);
       $("#totalRecovered").html(recovered);
       $("#deaths").html(deaths);
@@ -237,6 +247,7 @@ function getData(country, quesNo, noOfTries) {
           responsive: true,
         },
       });
+      game(noOfTries, quesNo, recovered, deaths, active);
     });
   } else {
     axios({
@@ -249,14 +260,6 @@ function getData(country, quesNo, noOfTries) {
       $("#deaths").html(latestData.Deaths);
       chartData = [latestData.Active, latestData.Recovered, latestData.Deaths];
       chartLabels = ["Active", "Recovered", "Deaths"];
-
-      game(
-        noOfTries,
-        quesNo,
-        latestData.Recovered,
-        latestData.Deaths,
-        latestData.Active
-      );
 
       var ctx = document.getElementById("covidChart").getContext("2d");
       chart1 = new Chart(ctx, {
@@ -278,6 +281,13 @@ function getData(country, quesNo, noOfTries) {
           responsive: true,
         },
       });
+      game(
+        noOfTries,
+        quesNo,
+        latestData.Recovered,
+        latestData.Deaths,
+        latestData.Active
+      );
     });
   }
   if ($("#totalActive").is(":empty")) {
@@ -431,11 +441,6 @@ function game(noOfTries, quesNo, recovered, deaths, active) {
 }
 
 function addPoints(tries) {
-  //points += tries * 10;
-  // let saveObject = {
-  //   Points: points,
-  //   BoughtNews: checkPurchase,
-  // };
   
   storedPoints = localStorage.getItem("Points");
   storedPurchase = localStorage.getItem("Purchase");
@@ -464,14 +469,6 @@ function addPoints(tries) {
   //   console.log(localStorage.points);
   // }
 }
-
-// function store() {
-//   document
-//     .getElementsByClassName("lead buyNews")
-//     .addEventListener("click", function getPlaces() {
-//       purchaseNews();
-//     });
-// }
 
 //Ignore this. It is just to find out the answer for the ques
 function tester() {

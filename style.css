@@ -487,7 +487,9 @@ a:hover {
   background-color: black;
   color: white;
 }
-
+.showPoint, .hint {
+  display:inline-block;
+}
 .save, .load {
   display:inline-block;
 }
