@@ -1,7 +1,6 @@
 $(".buyBadge").click(purchaseBadge);
 $(".refreshBadge").click(loadBadge);
 
-
 let map;
 let home;
 let geocoder;
@@ -9,7 +8,7 @@ let userAddress;
 let markers = [];
 
 let points = 999;
-let checkPurchase = 5;
+let checkPurchase = 0;
 
 function initMap() {
   //displays a google map
@@ -126,53 +125,56 @@ function initMap() {
 
 //Change point value (currently 999) to final value
 function purchaseBadge() {
-
-  // if (checkPurchase == 0) {
-  //   if (points < 999) {
-  //     alert("You have Insufficient Points!");
-  //   } else if (points >= 999) {
-  //     var r = confirm(
-  //       "Clicking OK will confirm purchase. Are you sure you want to continue?"
-  //     );
-  //     if (r == true) {
-  //       points -= 50;
-  //       checkPurchase = 1;
-  //       alert(
-  //         "Points have been deducted. You have " + points + " points remaining!"
-  //       );
-  //       $(".buyBadge").css("background-color", "Gray");
-  //       $(".buyBadge").empty();
-  //       $(".buyBadge").append("Bought");
-  //     }
-  //   }
-  // } else {
-  //   alert("You have already gotten this feature!");
-  // }
+  if (checkPurchase < 5) {
+    if (points < 50) {
+      alert("You have insufficient points!");
+    } else if (points >= 50) {
+      var r = confirm(
+        "Clicking OK will purchase a badge. Are you sure you want to continue?"
+      );
+      if (r == true) {
+        points -= 50;
+        checkPurchase += 1;
+        if (checkPurchase == 5) {
+          alert("Congratulations you have gotten all 5 badges!");
+          $(".buyBadge").css("background-color", "Gray");
+          $(".buyBadge").empty();
+          $(".buyBadge").append("Sold Out");
+        }
+      }
+    }
+  } else {
+    alert("Congratulations you have gotten all 5 badges!");
+    $(".buyBadge").css("background-color", "Gray");
+    $(".buyBadge").empty();
+    $(".buyBadge").append("Sold Out");
+  }
 }
 
 function loadBadge() {
-
-  $(".badgeBox").empty()
-
+  $(".refreshBadge").html("Refresh Badges");
   if (checkPurchase == 0) {
     alert("You have not purchased any badges! Load Data or Play Some More!");
   } else if (checkPurchase == 1) {
-    
-    
+    $(".badgeOne").show();
   } else if (checkPurchase == 2) {
-    
-
-
+    $(".badgeOne").show();
+    $(".badgeTwo").show();
   } else if (checkPurchase == 3) {
-    
-
-
+    $(".badgeOne").show();
+    $(".badgeTwo").show();
+    $(".badgeThree").show();
   } else if (checkPurchase == 4) {
-  
-
-
+    $(".badgeOne").show();
+    $(".badgeTwo").show();
+    $(".badgeThree").show();
+    $(".badgeFour").show();
   } else if (checkPurchase == 5) {
-    
+    $(".badgeOne").show();
+    $(".badgeTwo").show();
+    $(".badgeThree").show();
+    $(".badgeFour").show();
+    $(".badgeFive").show();
   }
 }
 
@@ -449,11 +451,10 @@ function game(noOfTries, quesNo, recovered, deaths, active) {
 }
 
 function addPoints(tries) {
-  
   storedPoints = localStorage.getItem("Points");
   storedPurchase = localStorage.getItem("Purchase");
 
-  if ("Points" in localStorage){
+  if ("Points" in localStorage) {
     points = localStorage.getItem("Points");
     checkPurchase = localStorage.getItem("Purchase");
 
@@ -462,13 +463,12 @@ function addPoints(tries) {
 
     localStorage.setItem("Points", points);
     localStorage.setItem("Purchase", checkPurchase);
-  }
-  else {
+  } else {
     points += tries * 10;
     localStorage.setItem("Points", points);
     localStorage.setItem("Purchase", checkPurchase);
   }
-  
+
   // if (localStorage.points) {
   //   localStorage.points = Number(localStorage.points) + tries * 10;
   //   console.log(localStorage.points);

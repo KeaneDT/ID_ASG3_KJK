@@ -553,7 +553,14 @@ a:hover {
   margin-top: 10%;
 }
 
-/*CSS Stylig for Map*/
+.badgeBox {
+  padding-left: 0;
+}
+
+.badgeOne, .badgeTwo, .badgeThree, .badgeFour, .badgeFive {
+  display: none;
+}
+
 
 @media only screen and (min-width: 768px) {
   .navbar-toggler-icon {
@@ -562,6 +569,8 @@ a:hover {
   .navbar-toggle {
     display: none;
   }
+  
+ 
   /* #map {
     width: 59.25%;
   } */
