@@ -10,7 +10,6 @@ let geocoder;
 let userAddress;
 let markers = [];
 
-let points = 0;
 let checkPurchase = 0;
 
 function initMap() {
@@ -20,8 +19,6 @@ function initMap() {
     center: center,
     zoom: 1.8,
   });
-
-  tester();
 
   if ($(".displayHeader").is(":empty")) {
     defaultCountry = geoplugin_countryName();
@@ -79,16 +76,12 @@ function initMap() {
             $(".displayHeader").empty();
             $(".displayHeader").html(inputAddress.long_name);
             chart1.destroy();
-            if(getData($(".displayHeader").html(), quesNo, noOfTries)){
-              alert("Correct");
+            getData($(".displayHeader").html(), quesNo, noOfTries);
+            if(noOfTries > 0){
+              noOfTries --;
             }
             else{
-              if(noOfTries > 0){
-                noOfTries --;
-              }
-              else{
-                alert("You have no tries left! Please refresh the page!");
-              }
+              alert("You have no tries left! Please refresh the page!");
             }
           }
         });
@@ -321,7 +314,6 @@ function game(noOfTries, quesNo, recovered, deaths, active) {
     method: "get",
     url: "https://api.covid19api.com/summary",
   }).then((main) => {
-    let tries = noOfTries;
       let countriesData = main.data.Countries;
       if(noOfTries > 0){
         if(quesNo == 1){
@@ -334,15 +326,14 @@ function game(noOfTries, quesNo, recovered, deaths, active) {
             }
             i++;
           }
-          console.log(answerStatus);
           if (answerStatus) {
-            alert("You got the answer correct!");
+            alert("You got the answer correct! Please refresh the page for another question");
+            addPoints(noOfTries);
           } 
           else {
             alert("You got the answer wrong! Please try again!");
-            tries--;
-            console.log(tries);
-            document.getElementById("noOfTries").innerHTML = "No of tries left: " + tries;
+            noOfTries--;
+            document.getElementById("noOfTries").innerHTML = "No of tries left: " + noOfTries;
           }
         }
         else if(quesNo == 2){
@@ -355,15 +346,14 @@ function game(noOfTries, quesNo, recovered, deaths, active) {
             }
             i++;
           }
-          console.log(answerStatus);
           if (answerStatus) {
-            alert("You got the answer correct!");
+            alert("You got the answer correct! Please refresh the page for another question");
+            addPoints(noOfTries);
           } 
           else {
             alert("You got the answer wrong! Please try again!");
-            tries--;
-            console.log(tries);
-            document.getElementById("noOfTries").innerHTML = "No of tries left: " + tries;
+            noOfTries--;
+            document.getElementById("noOfTries").innerHTML = "No of tries left: " + noOfTries;
           }
         }
         else if(quesNo == 3){
@@ -376,15 +366,14 @@ function game(noOfTries, quesNo, recovered, deaths, active) {
             }
             i++;
           }
-          console.log(answerStatus);
           if (answerStatus) {
-            alert("You got the answer correct!");
+            alert("You got the answer correct! Please refresh the page for another question");
+            addPoints(noOfTries);
           } 
           else {
             alert("You got the answer wrong! Please try again!");
-            tries--;
-            console.log(tries);
-            document.getElementById("noOfTries").innerHTML = "No of tries left: " + tries;
+            noOfTries--;
+            document.getElementById("noOfTries").innerHTML = "No of tries left: " + noOfTries;
           }
         }
         else if(quesNo == 4){
@@ -397,15 +386,14 @@ function game(noOfTries, quesNo, recovered, deaths, active) {
             }
             i++;
           }
-          console.log(answerStatus);
           if (answerStatus) {
-            alert("You got the answer correct!");
+            alert("You got the answer correct! Please refresh the page for another question");
+            addPoints(noOfTries);
           } 
           else {
             alert("You got the answer wrong! Please try again!");
-            tries--;
-            console.log(tries);
-            document.getElementById("noOfTries").innerHTML = "No of tries left: " + tries;
+            noOfTries--;
+            document.getElementById("noOfTries").innerHTML = "No of tries left: " + noOfTries;
           }
         }
         else if(quesNo == 5){
@@ -419,19 +407,35 @@ function game(noOfTries, quesNo, recovered, deaths, active) {
             }
             i++;
           }
-          console.log(answerStatus);
           if (answerStatus) {
-            alert("You got the answer correct!");
+            alert("You got the answer correct! Please refresh the page for another question");
+            addPoints(noOfTries);
           } 
           else {
             alert("You got the answer wrong! Please try again!");
-            tries--;
-            console.log(tries);
-            document.getElementById("noOfTries").innerHTML = "No of tries left: " + tries;
+            noOfTries--;
+            document.getElementById("noOfTries").innerHTML = "No of tries left: " + noOfTries;
           }
         }
       }
     });
+}
+
+function addPoints(tries){
+  if(localStorage.points){
+    localStorage.points = Number(localStorage.points) + (tries*10);
+    console.log(localStorage.points);
+  }
+  else{
+    localStorage.points = (tries*10);
+    console.log(localStorage.points);
+  }
+}
+
+function store(){
+  document.getElementsByClassName("lead buyNews").addEventListener("click", function getPlaces(){
+    purchaseNews();
+  });
 }
 
 //Ignore this. It is just to find out the answer for the ques
@@ -441,11 +445,11 @@ function tester() {
     .then((data) => {
       let countriesData = data.Countries;
       let i = 1;
-      let max = 100000000;
+      let max = 0;
       let maxCountry = "";
       while (i < countriesData.length) {
-        if (countriesData[i].TotalRecovered < max) {
-          max = countriesData[i].TotalRecovered;
+        if (countriesData[i].TotalConfirmed > max) {
+          max = countriesData[i].TotalConfirmed;
           maxCountry = countriesData[i].Country;
         }
         i++;
