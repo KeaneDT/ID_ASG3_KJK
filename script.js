@@ -79,6 +79,7 @@ function initMap() {
               noOfTries--;
             } else {
               alert("You have no tries left! Please refresh the page!");
+              addPoints(0);
             }
           }
         });
@@ -440,16 +441,28 @@ function addPoints(tries) {
   storedPurchase = localStorage.getItem("Purchase");
 
   if ("Points" in localStorage){
-    
+    points = localStorage.getItem("Points");
+    checkPurchase = localStorage.getItem("Purchase");
+
+    points += tries * 10;
+    localStorage.clear();
+
+    localStorage.setItem("Points", points);
+    localStorage.setItem("Purchase", checkPurchase);
+  }
+  else {
+    points += tries * 10;
+    localStorage.setItem("Points", points);
+    localStorage.setItem("Purchase", checkPurchase);
   }
   
-  if (localStorage.points) {
-    localStorage.points = Number(localStorage.points) + tries * 10;
-    console.log(localStorage.points);
-  } else {
-    localStorage.points = tries * 10;
-    console.log(localStorage.points);
-  }
+  // if (localStorage.points) {
+  //   localStorage.points = Number(localStorage.points) + tries * 10;
+  //   console.log(localStorage.points);
+  // } else {
+  //   localStorage.points = tries * 10;
+  //   console.log(localStorage.points);
+  // }
 }
 
 // function store() {
