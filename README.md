@@ -43,19 +43,19 @@ From the perspective of the user, I would like a simple to use application that 
 
 So far we have used Bootstrap, Jquery, Google Maps API, Geoplugin, Covid-19 API, Lottie & Chart.Js to help us make the website.
 
-We have also added nomalize css: https://necolas.github.io/normalize.css/8.0.1/normalize.css
-Axios was also used: https://github.com/axios/axios
+- We have also added nomalize css: https://necolas.github.io/normalize.css/8.0.1/normalize.css
+- Axios was also used: https://github.com/axios/axios
 
 # Media 
 
-Money Image used from: https://www.investopedia.com/terms/m/money.asp
-Map Background in Game/Store Pages were taken from a screenshot off google maps.
+- Money Image used from: https://www.investopedia.com/terms/m/money.asp
+- Map Background in Game/Store Pages were taken from a screenshot off google maps.
 
 # Acknowledgements
 
-Reverse-Geocoding: https://developers.google.com/maps/documentation/javascript/examples/geocoding-reverse
-How to create alert boxes: https://www.w3schools.com/howto/howto_js_alert.asp
-Covid-19 API Documentation: https://documenter.getpostman.com/view/10808728/SzS8rjbc
+- Reverse-Geocoding: https://developers.google.com/maps/documentation/javascript/examples/geocoding-reverse
+- How to create alert boxes: https://www.w3schools.com/howto/howto_js_alert.asp
+- Covid-19 API Documentation: https://documenter.getpostman.com/view/10808728/SzS8rjbc
 
 # List of Lottie Animations used:
 
