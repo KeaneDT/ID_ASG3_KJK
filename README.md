@@ -1,7 +1,7 @@
 # Link 
 - Github: https://keanedt.github.io/ID_ASG3_KJK/
 
-- Google Drive (Pitch):
+- Google Drive (Pitch): https://drive.google.com/file/d/1H37HfIf-XibeB-ZmWlZSSlfVMq7Bdj-r/view?usp=sharing
 
 # ID Assignment 3 (Pandemapic)
 
