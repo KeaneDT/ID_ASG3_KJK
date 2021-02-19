@@ -48,7 +48,7 @@ So far we have used Bootstrap, Jquery, Google Maps API, Geoplugin, Covid-19 API,
 
 # Media 
 
-- Money Image used from: https://www.investopedia.com/terms/m/money.asp
+- Coronavirus image from: https://gulfbusiness.com/gcc-coronavirus-update-total-cases-surge-past-180/
 - Map Background in Game/Store Pages were taken from a screenshot off google maps.
 
 # Acknowledgements
