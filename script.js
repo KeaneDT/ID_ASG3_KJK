@@ -1,5 +1,7 @@
 $(".buyBadge").click(purchaseBadge);
 $(".refreshBadge").click(loadBadge);
+$(".showPoint").click(showPoint);
+$(".clearData").click(clearData);
 
 let map;
 let home;
@@ -480,13 +482,35 @@ function addPoints(tries) {
     localStorage.setItem("Purchase", checkPurchase);
   }
 
-  // if (localStorage.points) {
-  //   localStorage.points = Number(localStorage.points) + tries * 10;
-  //   console.log(localStorage.points);
-  // } else {
-  //   localStorage.points = tries * 10;
-  //   console.log(localStorage.points);
-  // }
+  $(".pointBox").empty();
+}
+
+function showPoint() {
+  if ("Points" in localStorage) {
+    points = parseInt(localStorage.getItem("Points"));
+    checkPurchase = parseInt(localStorage.getItem("Purchase"));
+  }
+  $(".pointBox").empty();
+  $(".pointBox").append("Points: " + points);
+}
+
+function clearData() {
+  var r = confirm(
+    "Clicking OK will clear all data. Are you sure you want to continue?"
+  );
+  if (r == true) {
+    localStorage.clear();
+    $(".pointBox").empty();
+    $(".refreshBadge").html("Display Badges");
+    $(".badgeOne").hide();
+    $(".badgeTwo").hide();
+    $(".badgeThree").hide();
+    $(".badgeFour").hide();
+    $(".badgeFive").hide();
+    $(".buyBadge").css("background-color", "Black");
+    $(".buyBadge").empty();
+    $(".buyBadge").append("Get");
+  }
 }
 
 //Ignore this. It is just to find out the answer for the ques
@@ -512,4 +536,9 @@ function tester() {
 
 if ($("#question").is(":empty")) {
   $("#question").append("Please refresh the page");
+}
+if (checkPurchase >= 5) {
+  $(".buyBadge").css("background-color", "Gray");
+  $(".buyBadge").empty();
+  $(".buyBadge").append("Sold Out");
 }
