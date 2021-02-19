@@ -2,6 +2,7 @@ $(".buyBadge").click(purchaseBadge);
 $(".refreshBadge").click(loadBadge);
 $(".showPoint").click(showPoint);
 $(".clearData").click(clearData);
+$(".refreshQn").click(refresh);
 
 let map;
 let home;
@@ -80,7 +81,7 @@ function initMap() {
             if (noOfTries > 0) {
               noOfTries--;
             } else {
-              alert("You have no tries left! Please refresh the page!");
+              alert("You have no tries left! Please refresh the question!");
               addPoints(0);
             }
           }
@@ -141,6 +142,7 @@ function purchaseBadge() {
       if (r == true) {
         points -= 50;
         checkPurchase += 1;
+        $(".pointBox").hide();
         alert("Purchase successful! You have " + points + " points remaining!");
         localStorage.setItem("Points", points);
         localStorage.setItem("Purchase", checkPurchase);
@@ -321,6 +323,7 @@ function getData(country, quesNo, noOfTries) {
 }
 
 function questionSelector() {
+  $("#noOfTries").show();
   let quesNo = Math.floor(Math.random() * 5 + 1);
   if (quesNo == 1) {
     //Country with most recovered cases
@@ -365,9 +368,11 @@ function game(noOfTries, quesNo, recovered, deaths, active) {
         }
         if (answerStatus) {
           alert(
-            "You got the answer correct! Please refresh the page for another question"
+            "You got the answer correct! Please refresh for another question"
           );
           addPoints(noOfTries);
+          $("#question").html("Refresh for the next question!");
+          $("#noOfTries").hide();
         } else {
           alert("You got the answer wrong! Please try again!");
           noOfTries--;
@@ -386,9 +391,11 @@ function game(noOfTries, quesNo, recovered, deaths, active) {
         }
         if (answerStatus) {
           alert(
-            "You got the answer correct! Please refresh the page for another question"
+            "You got the answer correct! Please refresh for another question"
           );
           addPoints(noOfTries);
+          $("#question").html("Refresh for the next question!");
+          $("#noOfTries").hide();
         } else {
           alert("You got the answer wrong! Please try again!");
           noOfTries--;
@@ -407,9 +414,11 @@ function game(noOfTries, quesNo, recovered, deaths, active) {
         }
         if (answerStatus) {
           alert(
-            "You got the answer correct! Please refresh the page for another question"
+            "You got the answer correct! Please refresh for another question"
           );
           addPoints(noOfTries);
+          $("#question").html("Refresh for the next question!");
+          $("#noOfTries").hide();
         } else {
           alert("You got the answer wrong! Please try again!");
           noOfTries--;
@@ -428,9 +437,11 @@ function game(noOfTries, quesNo, recovered, deaths, active) {
         }
         if (answerStatus) {
           alert(
-            "You got the answer correct! Please refresh the page for another question"
+            "You got the answer correct! Please refresh for another question"
           );
           addPoints(noOfTries);
+          $("#question").html("Refresh for the next question!");
+          $("#noOfTries").hide();
         } else {
           alert("You got the answer wrong! Please try again!");
           noOfTries--;
@@ -450,10 +461,11 @@ function game(noOfTries, quesNo, recovered, deaths, active) {
         }
         if (answerStatus) {
           alert(
-            "You got the answer correct! Please refresh the page for another question"
+            "You got the answer correct! Please refresh for another question"
           );
           addPoints(noOfTries);
-          $("#question").empty();
+          $("#question").html("Refresh for the next question!");
+          $("#noOfTries").hide();
         } else {
           alert("You got the answer wrong! Please try again!");
           noOfTries--;
@@ -510,6 +522,9 @@ function clearData() {
     $(".buyBadge").css("background-color", "Black");
     $(".buyBadge").empty();
     $(".buyBadge").append("Get");
+
+    points = 0;
+    checkPurchase = 0;
   }
 }
 
@@ -534,9 +549,14 @@ function tester() {
     });
 }
 
-if ($("#question").is(":empty")) {
-  $("#question").append("Please refresh the page");
+function refresh() {
+  location.reload();
 }
+
+if ($("#question").is(":empty") && $(".displayHeader").is(":empty")) {
+  $("#question").append("Please refresh the question");
+}
+
 if (checkPurchase >= 5) {
   $(".buyBadge").css("background-color", "Gray");
   $(".buyBadge").empty();
